@@ -4,7 +4,7 @@ import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { format } from "date-fns"
-import { CalendarIcon, Clock } from "lucide-react"
+import { CalendarIcon, Clock, ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
@@ -50,7 +50,10 @@ export function ConsultationForm({ onSubmit, defaultService }: ConsultationFormP
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
+      company: "",
       service: defaultService || "",
+      description: "",
       files: [],
       date: undefined,
       time: "",
@@ -59,7 +62,7 @@ export function ConsultationForm({ onSubmit, defaultService }: ConsultationFormP
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" role="form">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
@@ -89,6 +92,56 @@ export function ConsultationForm({ onSubmit, defaultService }: ConsultationFormP
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input type="tel" placeholder="Your phone number" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="company"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company</FormLabel>
+              <FormControl>
+                <Input placeholder="Your company name (optional)" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Project Description</FormLabel>
+              <FormControl>
+                <textarea
+                  {...field}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  placeholder="Please describe your project requirements, goals, and any specific challenges you're facing..."
+                  rows={4}
+                />
+              </FormControl>
+              <p className="text-[11px] text-gray-500 mt-1 leading-tight">
+                Help me understand your project better so I can provide the most relevant consultation.
+              </p>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -133,37 +186,37 @@ export function ConsultationForm({ onSubmit, defaultService }: ConsultationFormP
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-full pl-3 text-left font-normal flex justify-between items-center text-foreground",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              <span className="text-foreground">{format(field.value, "PPP")}</span>
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-white" align="start">
-                        <Calendar
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date < new Date() || date.getDay() === 0 || date.getDay() === 6
-                          }
-
-                          className="!rounded-md !border-0"
-                        />
-                      </PopoverContent>
-                    </Popover>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <button
+                        type="button"
+                        className={cn(
+                          "relative flex h-10 w-full items-center justify-between rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        <div className="flex items-center">
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          <span>
+                            {field.value ? format(field.value, "PPP") : "Pick a date"}
+                          </span>
+                        </div>
+                        <ChevronDown className="h-4 w-4 opacity-50" />
+                      </button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0 bg-white" align="start">
+                    <Calendar
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date < new Date() || date.getDay() === 0 || date.getDay() === 6
+                      }
+                      className="!rounded-md !border-0"
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -177,7 +230,7 @@ export function ConsultationForm({ onSubmit, defaultService }: ConsultationFormP
                 <FormLabel>Time</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-white">
                       <div className="flex items-center">
                         <Clock className="mr-2 h-4 w-4" />
                         <span className={cn(!field.value && "text-muted-foreground")}>
@@ -225,7 +278,9 @@ export function ConsultationForm({ onSubmit, defaultService }: ConsultationFormP
 
         <Button
           type="submit"
-          className="w-full bg-primary hover:bg-primary/90 text-white"
+          variant="primary"
+          size="lg"
+          className="w-full"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? "Booking..." : "Book Consultation"}

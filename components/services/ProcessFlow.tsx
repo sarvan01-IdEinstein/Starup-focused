@@ -438,14 +438,14 @@ const ProcessFlow = ({
                       )}
 
                       {process[activeStep].keyPoints &&
-                        process[activeStep].keyPoints.length > 0 && (
+                        (process[activeStep]?.keyPoints?.length ?? 0) > 0 && (
                           <div className="mb-4">
                             <div className="flex items-center mb-2">
                               <Lightbulb className="w-4 h-4 mr-2 text-primary" />
                               <h4 className="font-semibold">Key Points</h4>
                             </div>
                             <ul className="space-y-1 pl-6">
-                              {process[activeStep].keyPoints.map(
+                              {process[activeStep]?.keyPoints?.map(
                                 (point, index) => (
                                   <li
                                     key={index}
@@ -461,7 +461,7 @@ const ProcessFlow = ({
                         )}
 
                       {process[activeStep].tools &&
-                        process[activeStep].tools.length > 0 && (
+                        (process[activeStep]?.tools?.length ?? 0) > 0 && (
                           <div className="mb-4">
                             <div className="flex items-center mb-2">
                               <Wrench className="w-4 h-4 mr-2 text-primary" />
@@ -470,7 +470,7 @@ const ProcessFlow = ({
                               </h4>
                             </div>
                             <div className="flex flex-wrap gap-2">
-                              {process[activeStep].tools.map((tool, index) => (
+                              {process[activeStep]?.tools?.map((tool, index) => (
                                 <span
                                   key={index}
                                   className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full"
@@ -483,14 +483,14 @@ const ProcessFlow = ({
                         )}
 
                       {process[activeStep].deliverables &&
-                        process[activeStep].deliverables.length > 0 && (
+                        (process[activeStep]?.deliverables?.length ?? 0) > 0 && (
                           <div className="mb-4">
                             <div className="flex items-center mb-2">
                               <CheckSquare className="w-4 h-4 mr-2 text-primary" />
                               <h4 className="font-semibold">Deliverables</h4>
                             </div>
                             <ul className="space-y-1 pl-6">
-                              {process[activeStep].deliverables.map(
+                              {process[activeStep]?.deliverables?.map(
                                 (deliverable, index) => (
                                   <li
                                     key={index}
@@ -524,7 +524,7 @@ const ProcessFlow = ({
                 <Button
                   onClick={handleNext}
                   disabled={activeStep === process.length - 1}
-                  variant="default"
+                  variant="primary"
                   className="flex items-center"
                   aria-label="Next step"
                 >

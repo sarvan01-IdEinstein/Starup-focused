@@ -1,0 +1,56 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Web API Support Test</title>
+        </head>
+        <body>
+            <div id="api-results"></div>
+            <script>
+                const apiResults = [];
+                
+                // Test Fetch API
+                apiResults.push({
+                    api: 'Fetch API',
+                    supported: typeof fetch !== 'undefined'
+                });
+                
+                // Test Local Storage
+                apiResults.push({
+                    api: 'Local Storage',
+                    supported: typeof localStorage !== 'undefined'
+                });
+                
+                // Test Service Worker
+                apiResults.push({
+                    api: 'Service Worker',
+                    supported: 'serviceWorker' in navigator
+                });
+                
+                // Test Intersection Observer
+                apiResults.push({
+                    api: 'Intersection Observer',
+                    supported: 'IntersectionObserver' in window
+                });
+                
+                // Test Web Workers
+                apiResults.push({
+                    api: 'Web Workers',
+                    supported: typeof Worker !== 'undefined'
+                });
+                
+                // Test Geolocation
+                apiResults.push({
+                    api: 'Geolocation',
+                    supported: 'geolocation' in navigator
+                });
+                
+                // Display results
+                const resultsDiv = document.getElementById('api-results');
+                resultsDiv.innerHTML = '<h2>Web API Support:</h2>' + 
+                    apiResults.map(r => `<p>${r.api}: ${r.supported ? '✅' : '❌'}</p>`).join('');
+                
+                window.webAPITestResults = apiResults;
+            </script>
+        </body>
+        </html>

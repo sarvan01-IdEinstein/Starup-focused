@@ -144,8 +144,8 @@ export const ecommerce = {
 declare global {
   interface Window {
     gtag: (
-      command: 'config' | 'event',
-      targetId: string,
+      command: 'config' | 'event' | 'consent',
+      targetIdOrAction?: string,
       config?: {
         page_path?: string;
         event_category?: string;
@@ -154,6 +154,11 @@ declare global {
         transaction_id?: string;
         currency?: string;
         items?: unknown[];
+        // Consent-specific properties
+        analytics_storage?: 'granted' | 'denied';
+        ad_storage?: 'granted' | 'denied';
+        ad_user_data?: 'granted' | 'denied';
+        ad_personalization?: 'granted' | 'denied';
       }
     ) => void;
   }

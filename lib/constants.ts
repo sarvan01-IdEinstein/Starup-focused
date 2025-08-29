@@ -15,7 +15,7 @@ export const CONTACT_INFO = {
   phone: '+49 15255409314',
   whatsapp: '+4915255409314',
   address: 'Walter-Petri-Ring 49, 65232, Taunusstein, Germany',
-  businessHours: 'Mon-Fri: 9:00 AM - 6:00 PM CET',
+  businessHours: 'Mon-Fri: 9:00 AM - 6:00 PM, Sat: 10:00 AM - 2:00 PM CET',
   timezone: 'Central European Time (CET)'
 };
 

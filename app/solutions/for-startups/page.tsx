@@ -22,7 +22,7 @@ const ForStartupsPage = () => {
       icon: DollarSign,
       title: 'Limited Budget',
       description: 'Traditional engineering services are expensive and designed for large enterprises',
-      solution: 'Our startup package offers 30-50% cost savings with flexible payment options'
+      solution: 'My startup approach offers 30-50% cost savings with flexible payment options'
     },
     {
       icon: Clock,
@@ -34,27 +34,27 @@ const ForStartupsPage = () => {
       icon: Users,
       title: 'Expertise Gap',
       description: 'Lack of in-house engineering expertise for complex product development',
-      solution: '26+ years of global engineering experience at your disposal'
+      solution: 'Experienced mechanical engineering expertise at your disposal'
     },
     {
       icon: Target,
       title: 'Manufacturing Complexity',
       description: 'Finding reliable, cost-effective manufacturing partners is challenging',
-      solution: 'Pre-qualified network of Indian manufacturers with cultural bridge support'
+      solution: 'Carefully selected manufacturing partners with personal coordination support'
     }
   ]
 
   const successMetrics = [
-    { metric: '87%', description: 'Success Rate', detail: 'Projects reach market successfully' },
+    { metric: '1-on-1', description: 'Personal Attention', detail: 'Direct communication with engineer' },
     { metric: '12-20', description: 'Weeks', detail: 'Concept to production timeline' },
     { metric: '30-50%', description: 'Cost Savings', detail: 'vs. traditional methods' },
-    { metric: '40-60%', description: 'Faster', detail: 'Than enterprise solutions' }
+    { metric: '24h', description: 'Response Time', detail: 'Quick decision making' }
   ]
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-slate-900 to-blue-800 pt-20">
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 pt-20">
         <div className="container mx-auto px-4 relative z-10 text-center text-white">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -99,9 +99,9 @@ const ForStartupsPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-6 text-slate-800">Startup Challenges We Solve</h2>
+            <h2 className="text-4xl font-bold mb-6 text-slate-800">Startup Challenges I Solve</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              We understand the unique challenges startups face and have tailored solutions for each
+              I understand the unique challenges startups face and have tailored solutions for each
             </p>
           </motion.div>
 
@@ -127,7 +127,7 @@ const ForStartupsPage = () => {
                     <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded">
                       <div className="flex items-center">
                         <CheckCircle className="w-5 h-5 text-green-600 mr-2 flex-shrink-0" />
-                        <p className="text-green-800 font-medium">Our Solution:</p>
+                        <p className="text-green-800 font-medium">My Solution:</p>
                       </div>
                       <p className="text-green-700 mt-1">{challenge.solution}</p>
                     </div>
@@ -151,7 +151,7 @@ const ForStartupsPage = () => {
               Featured: Product Development Accelerator
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our flagship startup solution - a complete 4-phase program designed specifically for early-stage companies
+              My flagship startup solution - a complete 4-phase program designed specifically for early-stage companies
             </p>
           </motion.div>
 
@@ -163,13 +163,13 @@ const ForStartupsPage = () => {
               >
                 <Card className="bg-gradient-to-br from-blue-600 to-blue-700 text-white">
                   <CardContent className="p-8">
-                    <h3 className="text-2xl font-bold mb-6">4-Phase Accelerator Process</h3>
+                    <h3 className="text-2xl font-bold mb-6">The 4-Phase IdEinstein Path</h3>
                     <div className="space-y-4">
                       {[
-                        { phase: 'Phase 1', title: 'Concept Validation', duration: '2-4 weeks' },
-                        { phase: 'Phase 2', title: 'MVP & Prototyping', duration: '4-6 weeks' },
-                        { phase: 'Phase 3', title: 'Manufacturing Ready', duration: '3-4 weeks' },
-                        { phase: 'Phase 4', title: 'Production Support', duration: '2-3 weeks' }
+                        { phase: 'Phase 1', title: 'Concept & Feasibility', duration: '1-2 months' },
+                        { phase: 'Phase 2', title: 'Design & Prototyping', duration: '2-4 months' },
+                        { phase: 'Phase 3', title: 'Validation & Manufacturing Setup', duration: '3-6 months' },
+                        { phase: 'Phase 4', title: 'Production & Ongoing Support', duration: 'Ongoing' }
                       ].map((phase, index) => (
                         <div key={phase.phase} className="flex items-center">
                           <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-4">
@@ -186,8 +186,8 @@ const ForStartupsPage = () => {
                     </div>
                     <div className="mt-6 pt-6 border-t border-white/20">
                       <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold">Total Timeline:</span>
-                        <span className="text-2xl font-bold text-yellow-300">12-20 weeks</span>
+                        <span className="text-lg font-bold">Personal Guidance:</span>
+                        <span className="text-2xl font-bold text-yellow-300">Every Step</span>
                       </div>
                     </div>
                   </CardContent>
@@ -222,13 +222,13 @@ const ForStartupsPage = () => {
                   <h4 className="text-lg font-bold text-yellow-800 mb-2">💡 Startup Special:</h4>
                   <p className="text-yellow-700">
                     Save 30-40% compared to hiring individual services. 
-                    Plus, get access to our pre-qualified Indian manufacturing network.
+                    Plus, get access to my carefully selected manufacturing network.
                   </p>
                 </div>
 
                 <Button variant="cta" size="lg" className="w-full" asChild>
                   <Link href="/services/product-development-accelerator">
-                    Learn More About Our Accelerator
+                    Learn More About My Accelerator
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>
                 </Button>
@@ -239,16 +239,16 @@ const ForStartupsPage = () => {
       </section>
 
       {/* Success Metrics */}
-      <section className="py-20 bg-gradient-to-r from-blue-900 via-slate-900 to-blue-900 text-white">
+      <section className="py-20 bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-6">Proven Startup Success</h2>
+            <h2 className="text-4xl font-bold mb-6">My Startup Approach</h2>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-              Our track record speaks for itself - helping startups bring innovative products to market
+              Focused on delivering results for startups with personal attention and proven methodology
             </p>
           </motion.div>
 
@@ -280,7 +280,7 @@ const ForStartupsPage = () => {
           >
             <h2 className="text-4xl font-bold mb-6 text-slate-800">Need Individual Services?</h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              While our accelerator package offers the best value, we also provide individual services for specific needs
+              While my accelerator package offers the best value, I also provide individual services for specific needs
             </p>
           </motion.div>
 
@@ -328,7 +328,7 @@ const ForStartupsPage = () => {
               Ready to Launch Your Startup?
             </h2>
             <p className="text-xl text-slate-600 mb-8 leading-relaxed">
-              Join successful startups who've brought their products to market with our proven solutions. 
+              Work directly with an experienced engineer who understands startup challenges. 
               Get your custom timeline and quote today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

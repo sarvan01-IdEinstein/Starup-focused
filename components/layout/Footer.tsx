@@ -8,14 +8,13 @@ import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaYoutube, FaXing, FaWh
 import { ArrowRight, Mail, Phone, Send, Clock } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { UnifiedConsultationCard } from "@/components/shared/UnifiedConsultationCard"
+
 import { CONTACT_INFO, SOCIAL_LINKS } from '@/lib/constants'
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [showQuotation, setShowQuotation] = useState(false);
+
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,31 +39,11 @@ const Footer = () => {
     }
   };
 
-  const handleQuotationSubmit = async (data: any) => {
-    try {
-      const response = await fetch('/api/quotes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
 
-      const result = await response.json()
-
-      if (response.ok) {
-        alert(`Quote request submitted successfully! Reference: ${result.quoteReference}`)
-        setShowQuotation(false)
-      } else {
-        alert(`Failed to submit quote: ${result.error}`)
-      }
-    } catch (error) {
-      console.error('Quote submission error:', error)
-      alert('Failed to submit quote request. Please try again.')
-    }
-  };
 
   return (
     <footer 
-      className="bg-gradient-to-b from-white to-gray-50 border-t border-gray-200"
+      className="bg-white border-t border-gray-200"
       role="contentinfo"
     >
       <div className="container mx-auto px-4 py-16">
@@ -98,12 +77,12 @@ const Footer = () => {
                 whileHover={{ scale: 1.02 }}
                 className="text-xl font-bold"
               >
-                <span className="text-primary">Id</span>
-                <span className="text-gray-800">Einstein</span>
+                <span className="text-yellow-500">Id</span>
+                <span className="text-gray-900">Einstein</span>
               </motion.div>
             </Link>
             <motion.p 
-              className="text-primary/80 leading-relaxed"
+              className="text-gray-600 leading-relaxed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
@@ -127,18 +106,18 @@ const Footer = () => {
                     type: 'spring',
                     stiffness: 300
                   }}
-                  className="flex items-center space-x-3 text-primary/80 group"
+                  className="flex items-center space-x-3 text-gray-600 group"
                 >
                   <motion.div
                     whileHover={{ scale: 1.1 }}
-                    className="text-primary"
+                    className="text-blue-600"
                   >
                     <item.icon className="w-4 h-4" />
                   </motion.div>
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="hover:text-primary transition-colors duration-300 text-sm"
+                      className="hover:text-blue-600 transition-colors duration-300 text-sm"
                       aria-label={item.label}
                     >
                       {item.text}
@@ -159,7 +138,7 @@ const Footer = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <motion.h3 
-              className="text-lg font-semibold mb-6 text-primary"
+              className="text-lg font-semibold mb-6 text-gray-900"
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
@@ -202,10 +181,10 @@ const Footer = () => {
                           window.dispatchEvent(event);
                         }, 800);
                       }}
-                      className="text-primary hover:text-primary/80 transition-all duration-300 flex items-center group text-sm w-full text-left"
+                      className="text-gray-600 hover:text-blue-600 transition-all duration-300 flex items-center group text-sm w-full text-left"
                     >
                       <motion.div
-                        className="text-primary/60 group-hover:text-primary"
+                        className="text-gray-400 group-hover:text-blue-600"
                         whileHover={{ x: 3 }}
                       >
                         <ArrowRight className="w-3 h-3 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
@@ -217,10 +196,10 @@ const Footer = () => {
                   ) : (
                     <Link 
                       href={link.href}
-                      className="text-primary hover:text-primary/80 transition-all duration-300 flex items-center group text-sm"
+                      className="text-gray-600 hover:text-blue-600 transition-all duration-300 flex items-center group text-sm"
                     >
                       <motion.div
-                        className="text-primary/60 group-hover:text-primary"
+                        className="text-gray-400 group-hover:text-blue-600"
                         whileHover={{ x: 3 }}
                       >
                         <ArrowRight className="w-3 h-3 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
@@ -243,7 +222,7 @@ const Footer = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <motion.h3 
-              className="text-lg font-semibold mb-6 text-primary"
+              className="text-lg font-semibold mb-6 text-gray-900"
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
@@ -269,10 +248,10 @@ const Footer = () => {
                 >
                   <Link 
                     href={link.href}
-                    className="text-primary hover:text-primary/80 transition-all duration-300 flex items-center group text-sm"
+                    className="text-gray-600 hover:text-blue-600 transition-all duration-300 flex items-center group text-sm"
                   >
                     <motion.div
-                      className="text-primary/60 group-hover:text-primary"
+                      className="text-gray-400 group-hover:text-blue-600"
                       whileHover={{ x: 3 }}
                     >
                       <ArrowRight className="w-3 h-3 opacity-0 -ml-3 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
@@ -294,14 +273,14 @@ const Footer = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <motion.h3 
-              className="text-lg font-semibold mb-6 text-primary"
+              className="text-lg font-semibold mb-6 text-gray-900"
               whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
               Stay Connected
             </motion.h3>
             <motion.p 
-              className="text-primary/80 mb-6 leading-relaxed text-sm"
+              className="text-gray-600 mb-6 leading-relaxed text-sm"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.6 }}
@@ -330,7 +309,7 @@ const Footer = () => {
                     disabled={subscribeStatus === 'loading'}
                     variant="primary"
                     size="sm"
-                    className="rounded-l-none"
+                    className="rounded-l-none h-10"
                     aria-label="Subscribe to newsletter"
                   >
                     <AnimatePresence mode="wait">
@@ -381,24 +360,7 @@ const Footer = () => {
               </AnimatePresence>
             </form>
 
-            {/* CTA Button */}
-            <motion.div 
-              className="mt-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.6 }}
-            >
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button 
-                  variant="primary"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => setShowQuotation(true)}
-                >
-                  Get Quote
-                </Button>
-              </motion.div>
-            </motion.div>
+
           </motion.div>
         </div>
 
@@ -415,9 +377,20 @@ const Footer = () => {
               className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4"
               whileHover={{ scale: 1.01 }}
             >
-              <p className="text-primary/70 text-center md:text-left text-sm">
-                © {new Date().getFullYear()} IdEinstein. All rights reserved.
-              </p>
+              <div className="text-center md:text-left">
+                <p className="text-gray-500 text-sm">
+                  © {new Date().getFullYear()} IdEinstein. All rights reserved.
+                </p>
+                <p className="text-gray-400 text-xs mt-1">
+                  Solo practice, fully compliant with German/EU data privacy law—see our{' '}
+                  <Link 
+                    href="/privacy" 
+                    className="text-blue-500 hover:text-blue-600 underline transition-colors duration-200"
+                  >
+                    Privacy Policy
+                  </Link>.
+                </p>
+              </div>
             </motion.div>
             
             <motion.div 
@@ -426,7 +399,7 @@ const Footer = () => {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1.4, duration: 0.6 }}
             >
-              <span className="text-primary/60 text-xs font-medium">Follow Us:</span>
+              <span className="text-gray-500 text-xs font-medium">Follow Us:</span>
               <div className="flex space-x-3">
                 {Object.entries(SOCIAL_LINKS).map(([key, url], index) => {
                   const Icon = key === 'twitter' ? FaTwitter :
@@ -443,7 +416,7 @@ const Footer = () => {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary/60 hover:text-primary transition-all duration-300 p-1.5 rounded-full hover:bg-primary/10"
+                      className="text-gray-400 hover:text-blue-600 transition-all duration-300 p-1.5 rounded-full hover:bg-blue-50"
                       whileHover={{ 
                         scale: 1.2, 
                         rotate: 5
@@ -474,32 +447,23 @@ const Footer = () => {
             transition={{ delay: 1.8, duration: 0.6 }}
           >
             <motion.div
-              className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20"
+              className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200"
               whileHover={{ 
                 scale: 1.02,
-                backgroundColor: 'rgba(30, 64, 175, 0.1)',
-                borderColor: 'rgba(30, 64, 175, 0.3)'
+                backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                borderColor: 'rgba(59, 130, 246, 0.2)'
               }}
               transition={{ type: 'spring', stiffness: 300 }}
             >
-              <span className="text-primary/80 text-xs font-medium">🇩🇪 Engineered in Germany</span>
-              <span className="text-primary text-xs">•</span>
-              <span className="text-primary/80 text-xs font-medium">🇮🇳 Powered by Innovation</span>
+              <span className="text-gray-600 text-xs font-medium">🇩🇪 Engineered in Germany</span>
+              <span className="text-gray-400 text-xs">•</span>
+              <span className="text-gray-600 text-xs font-medium">🇮🇳 Powered by Innovation</span>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Quotation Modal */}
-      <Dialog open={showQuotation} onOpenChange={setShowQuotation}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogTitle className="sr-only">Request a Quotation</DialogTitle>
-          <UnifiedConsultationCard
-            type="quotation"
-            onSubmit={handleQuotationSubmit}
-          />
-        </DialogContent>
-      </Dialog>
+
     </footer>
   );
 };

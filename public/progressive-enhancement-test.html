@@ -1,0 +1,103 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Progressive Enhancement Test</title>
+            <style>
+                .progressive-test {
+                    padding: 20px;
+                    margin: 20px 0;
+                    border: 1px solid #ccc;
+                }
+                
+                /* Base styles (work everywhere) */
+                .enhanced-button {
+                    padding: 10px 20px;
+                    background: #f0f0f0;
+                    border: 1px solid #ccc;
+                    cursor: pointer;
+                }
+                
+                /* Enhanced styles (modern browsers) */
+                .enhanced-button {
+                    transition: all 0.3s ease;
+                    border-radius: 4px;
+                }
+                
+                /* Advanced enhancements */
+                @supports (display: grid) {
+                    .grid-enhanced {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 20px;
+                    }
+                }
+                
+                @supports (backdrop-filter: blur(10px)) {
+                    .backdrop-enhanced {
+                        backdrop-filter: blur(10px);
+                        background: rgba(255, 255, 255, 0.8);
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Progressive Enhancement Test</h1>
+            
+            <div class="progressive-test">
+                <h3>Basic Functionality (Works Everywhere)</h3>
+                <button class="enhanced-button" onclick="alert('Basic functionality works!')">
+                    Click Me (Basic)
+                </button>
+            </div>
+            
+            <div class="progressive-test grid-enhanced">
+                <div>
+                    <h3>Enhanced with CSS Grid</h3>
+                    <p>This layout uses CSS Grid if supported, falls back to normal flow.</p>
+                </div>
+                <div>
+                    <h3>Graceful Degradation</h3>
+                    <p>Content remains accessible even without advanced features.</p>
+                </div>
+            </div>
+            
+            <div class="progressive-test backdrop-enhanced">
+                <h3>Advanced Enhancement</h3>
+                <p>This section has backdrop blur if supported by the browser.</p>
+            </div>
+            
+            <script>
+                // Progressive JavaScript enhancement
+                if ('IntersectionObserver' in window) {
+                    console.log('✅ Intersection Observer supported - enabling advanced animations');
+                } else {
+                    console.log('❌ Intersection Observer not supported - using fallback');
+                }
+                
+                if ('serviceWorker' in navigator) {
+                    console.log('✅ Service Worker supported - enabling offline functionality');
+                } else {
+                    console.log('❌ Service Worker not supported - online only');
+                }
+                
+                // Feature detection results
+                const features = {
+                    intersectionObserver: 'IntersectionObserver' in window,
+                    serviceWorker: 'serviceWorker' in navigator,
+                    cssGrid: CSS.supports('display', 'grid'),
+                    backdropFilter: CSS.supports('backdrop-filter', 'blur(10px)')
+                };
+                
+                window.progressiveEnhancementResults = features;
+                
+                // Display results
+                const resultsDiv = document.createElement('div');
+                resultsDiv.innerHTML = '<h3>Feature Support Results:</h3>' + 
+                    Object.entries(features).map(([feature, supported]) => 
+                        `<p>${feature}: ${supported ? '✅' : '❌'}</p>`
+                    ).join('');
+                document.body.appendChild(resultsDiv);
+            </script>
+        </body>
+        </html>

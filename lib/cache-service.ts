@@ -1,5 +1,6 @@
 // Simple Cache Service - Production Ready (Zoho Direct)
-import { ZohoServiceFactory, ConfigService } from '@/lib/services'
+// Temporarily disable cache service imports until services are properly exported
+// import { ZohoServiceFactory, ConfigService } from '@/lib/services'
 
 export class CacheService {
   private static instance: CacheService
@@ -33,15 +34,18 @@ export class CacheService {
   }
 
   private async fetchProjectsFromZoho(accountId: string): Promise<any[]> {
-    if (!ConfigService.isConfigured(['ZOHO_CLIENT_ID', 'ZOHO_CLIENT_SECRET'])) {
+    // Check if Zoho is configured
+    if (!process.env.ZOHO_CLIENT_ID || !process.env.ZOHO_CLIENT_SECRET) {
       console.warn('⚠️ Zoho not configured, returning empty projects')
       return []
     }
 
     try {
       console.log('🔄 Fetching projects from Zoho...')
-      const zohoProjects = await ZohoServiceFactory.getService<any>('projects')
-      return await zohoProjects.getProjectsByClient(accountId) || []
+      // Import Zoho service dynamically to avoid circular dependencies
+      const { ZohoProjectsService } = await import('@/lib/zoho/projects')
+      const zohoProjects = new ZohoProjectsService()
+      return await zohoProjects.getProjectsByClient?.(accountId) || []
     } catch (error) {
       console.error('❌ Error fetching projects from Zoho:', error)
       return []
@@ -49,15 +53,18 @@ export class CacheService {
   }
 
   private async fetchInvoicesFromZoho(accountId: string): Promise<any[]> {
-    if (!ConfigService.isConfigured(['ZOHO_CLIENT_ID', 'ZOHO_CLIENT_SECRET'])) {
+    // Check if Zoho is configured
+    if (!process.env.ZOHO_CLIENT_ID || !process.env.ZOHO_CLIENT_SECRET) {
       console.warn('⚠️ Zoho not configured, returning empty invoices')
       return []
     }
 
     try {
       console.log('🔄 Fetching invoices from Zoho...')
-      const zohoBooks = await ZohoServiceFactory.getService<any>('books')
-      return await zohoBooks.getInvoices(accountId) || []
+      // Import Zoho service dynamically to avoid circular dependencies
+      const { ZohoBooksService } = await import('@/lib/zoho/books')
+      const zohoBooks = new ZohoBooksService()
+      return await zohoBooks.getInvoices?.(accountId) || []
     } catch (error) {
       console.error('❌ Error fetching invoices from Zoho:', error)
       return []

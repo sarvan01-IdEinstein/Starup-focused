@@ -151,7 +151,7 @@ const StorePage = () => {
               className="pl-10 h-12 text-lg"
             />
           </div>
-          <Button variant="default" className="h-12 px-8">
+          <Button variant="primary" className="h-12 px-8">
             <Search className="w-4 h-4 mr-2" />
             Search
           </Button>
@@ -283,7 +283,7 @@ const StorePage = () => {
                           ${product.price.toFixed(2)}
                         </span>
                         <Button 
-                          variant="default"
+                          variant="primary"
                           onClick={() => {/* Add to cart logic */}}
                         >
                           <ShoppingCart className="w-4 h-4 mr-2" />

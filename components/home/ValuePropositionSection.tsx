@@ -7,38 +7,38 @@ export default function ValuePropositionSection() {
   const benefits = [
     {
       icon: DollarSign,
-      title: '30-50% Cost Savings',
-      description: 'Get German-quality engineering at Indian prices. Our Hub & Spoke model eliminates traditional overhead costs.',
+      title: 'Transparent Pricing',
+      description: 'No hidden costs or corporate markup. You pay directly for engineering expertise and materials.',
       color: 'from-green-500 to-emerald-600'
     },
     {
       icon: Clock,
-      title: 'Faster Time-to-Market',
-      description: '24/7 development cycle leveraging global time zones. From concept to production in 12-20 weeks.',
+      title: 'Focused Attention',
+      description: 'Your project gets my full attention. No juggling between multiple large clients or bureaucratic delays.',
       color: 'from-blue-500 to-cyan-600'
     },
     {
       icon: Shield,
-      title: 'German Quality Standards',
-      description: 'Every project meets rigorous German engineering standards with comprehensive quality assurance.',
+      title: 'Quality Standards',
+      description: 'Every project follows rigorous engineering standards and best practices I\'ve learned from industry experience.',
       color: 'from-purple-500 to-violet-600'
     },
     {
       icon: Users,
-      title: 'Dedicated Team',
-      description: 'Your own dedicated engineering team with 26+ years of combined global experience.',
+      title: 'Direct Communication',
+      description: 'Work directly with me - the engineer who understands your project. No account managers or middlemen.',
       color: 'from-orange-500 to-red-600'
     },
     {
       icon: TrendingUp,
-      title: 'Scalable Solutions',
-      description: 'Start small and scale up. Our flexible model grows with your business needs and funding stages.',
+      title: 'Flexible Approach',
+      description: 'Adapt quickly to your changing needs. Scale up with trusted partners or keep it lean - your choice.',
       color: 'from-indigo-500 to-purple-600'
     },
     {
       icon: Zap,
-      title: 'Proven Process',
-      description: 'Battle-tested 4-phase methodology that has delivered 100+ successful projects worldwide.',
+      title: 'Efficient Process',
+      description: 'Streamlined 4-phase methodology focused on rapid iteration and practical results for startups.',
       color: 'from-yellow-500 to-orange-600'
     }
   ]
@@ -53,11 +53,11 @@ export default function ValuePropositionSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Why Choose IdEinstein?
+            Why Work with Me?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We're not just another engineering service. We're your strategic partner 
-            bridging the gap between German precision and Indian innovation.
+            As a solo engineering consultant, I offer what large firms can't: 
+            personal attention, direct communication, and complete project ownership.
           </p>
         </motion.div>
 
@@ -87,19 +87,28 @@ export default function ValuePropositionSection() {
           ))}
         </div>
 
-        {/* Stats Section */}
+        {/* Value Highlights */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-20 bg-white rounded-3xl p-8 md:p-12 shadow-xl max-w-5xl mx-auto"
         >
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              What You Can Expect
+            </h3>
+            <p className="text-gray-600">
+              Honest, professional engineering services tailored for startups
+            </p>
+          </div>
+          
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
-              { number: '26+', label: 'Years Experience' },
-              { number: '100+', label: 'Projects Delivered' },
-              { number: '30-50%', label: 'Cost Savings' },
-              { number: '12-20', label: 'Weeks to Market' }
+              { number: '24h', label: 'Response Time' },
+              { number: '1-on-1', label: 'Direct Access' },
+              { number: 'No', label: 'Hidden Costs' },
+              { number: 'Full', label: 'Transparency' }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

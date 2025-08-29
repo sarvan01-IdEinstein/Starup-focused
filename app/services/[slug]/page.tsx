@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import ServiceDetails from "@/components/services/ServiceDetails";
+import UnifiedServicePage from "@/components/services/UnifiedServicePage";
 import { servicesData } from "@/lib/services-data";
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -10,7 +10,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  return <ServiceDetails service={service} />;
+  return <UnifiedServicePage service={service} />;
 }
 
 // Generate static params for all services

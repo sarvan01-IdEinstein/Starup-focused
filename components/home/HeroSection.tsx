@@ -1,15 +1,13 @@
 'use client'
 
 import * as React from "react"
-import { motion } from 'framer-motion'
-import { Calendar, FileText } from 'lucide-react'
-import { Button } from "@/components/ui/button"
+import { Calendar, FileText, Lightbulb, Clock, Users } from 'lucide-react'
+import UnifiedHero from "@/components/shared/UnifiedHero"
 import { UnifiedConsultationCard } from "@/components/shared/UnifiedConsultationCard"
 import { FloatingButtons } from "@/components/shared/FloatingButtons"
 import {
   Dialog,
   DialogContent,
-  // DialogTrigger, // Unused import
 } from "@/components/ui/dialog"
 
 function HeroSection() {
@@ -17,71 +15,31 @@ function HeroSection() {
   const [showQuotation, setShowQuotation] = React.useState(false)
   
   return (
-    <motion.section 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="text-center pt-32 pb-24 min-h-[80vh] flex flex-col justify-center relative overflow-hidden bg-transparent"
-    >
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 font-sans leading-tight"
-        >
-          <span className="text-yellow-500">Id</span><span className="text-primary">Einstein</span>: Your Global Engineering Partner
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-xl md:text-2xl mb-12 text-text/80 font-light max-w-4xl mx-auto leading-relaxed"
-        >
-          Bridging Innovation from Germany to India, Delivering End-to-End Product Development for Startups & Enterprises
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <Button 
-            variant="primary"
-            size="lg"
-            onClick={() => setShowConsultation(true)}
-          >
-            Book Free Consulting <Calendar className="ml-2 h-5 w-5" />
-          </Button>
-          <Button 
-            variant="secondary"
-            size="lg"
-            onClick={() => setShowQuotation(true)}
-          >
-            Get Quotation <FileText className="ml-2 h-5 w-5" />
-          </Button>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-6 h-6 border-2 border-primary rounded-full"
-          >
-            <motion.div
-              animate={{ height: ["0%", "50%", "0%"] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1 mx-auto bg-primary rounded-full"
-            />
-          </motion.div>
-        </motion.div>
-      </div>
+    <>
+      <UnifiedHero
+        badge={{
+          icon: Lightbulb,
+          text: "German Precision × Indian Innovation"
+        }}
+        title="IdEinstein:"
+        highlight="Your Global Engineering Partner"
+        subtitle="Bridging Innovation from Germany to India, Delivering End-to-End Product Development for Startups & Enterprises"
+        description="26+ years of engineering excellence now focused on transforming your ideas into market-ready products through our proven Hub & Spoke methodology."
+        primaryCTA={{
+          text: "Book Free Consulting",
+          onClick: () => setShowConsultation(true),
+          icon: Calendar
+        }}
+        secondaryCTA={{
+          text: "Get Quotation",
+          onClick: () => setShowQuotation(true)
+        }}
+        metrics={[
+          { icon: Clock, text: "Fast Delivery" },
+          { icon: Users, text: "Expert Team" },
+          { icon: Lightbulb, text: "Proven Innovation" }
+        ]}
+      />
 
       {/* Desktop Modals */}
       <Dialog open={showConsultation} onOpenChange={setShowConsultation}>
@@ -133,7 +91,7 @@ function HeroSection() {
 
       {/* Mobile Floating Buttons */}
       <FloatingButtons />
-    </motion.section>
+    </>
   )
 }
 

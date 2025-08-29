@@ -140,6 +140,39 @@ export class ZohoCRMService extends ZohoBaseService {
     }
   }
 
+  async updateContact(contactId: string, updateData: {
+    Newsletter_Subscription?: string
+    Newsletter_Subscribed_Date?: string
+    Lead_Source?: string
+    [key: string]: any
+  }): Promise<ZohoContact> {
+    const url = `https://www.zohoapis.in/crm/v2/Contacts/${contactId}`
+    
+    console.log('📤 Updating contact in Zoho CRM:', contactId, updateData)
+    
+    const response = await this.makeRequest('PUT', url, {
+      data: [{ id: contactId, ...updateData }]
+    })
+    
+    console.log('📥 Contact update response:', response)
+    
+    if (response.data && response.data[0] && response.data[0].code === 'SUCCESS') {
+      const contact = response.data[0].details
+      return {
+        id: contact.id,
+        email: contact.Email,
+        first_name: contact.First_Name,
+        last_name: contact.Last_Name,
+        company: contact.Account_Name,
+        phone: contact.Phone,
+        created_time: contact.Created_Time,
+        modified_time: contact.Modified_Time
+      }
+    } else {
+      throw new Error(`Contact update failed: ${JSON.stringify(response)}`)
+    }
+  }
+
   async createLead(leadData: unknown): Promise<any> {
     const url = 'https://www.zohoapis.in/crm/v2/Leads'
     

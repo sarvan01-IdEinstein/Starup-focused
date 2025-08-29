@@ -78,12 +78,12 @@ export default function FinalCTASection() {
       <motion.div
         animate={{ y: [-20, 20, -20], rotate: [0, 180, 360] }}
         transition={{ duration: 10, repeat: Infinity }}
-        className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl"
+        className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 blur-xl rounded-lg"
       />
       <motion.div
         animate={{ y: [20, -20, 20], rotate: [360, 180, 0] }}
         transition={{ duration: 12, repeat: Infinity }}
-        className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-xl"
+        className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 blur-xl rounded-lg"
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -104,23 +104,23 @@ export default function FinalCTASection() {
             </h2>
             
             <p className="text-xl md:text-2xl text-blue-200 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Join 100+ companies who chose IdEinstein to bridge German precision with Indian innovation. 
+              Work directly with an experienced mechanical engineer who understands your challenges. 
               Your next breakthrough is just 12-20 weeks away.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
               <Link href="/services/product-development-accelerator">
-                <Button variant="accelerator" size="lg" className="px-10 py-5 text-xl rounded-full">
+                <Button variant="accelerator" size="hero" className="rounded-lg">
                   <Rocket className="mr-3 w-6 h-6" />
-                  Start Your Accelerator
+                  Start Your Project
                   <ArrowRight className="ml-3 w-6 h-6" />
                 </Button>
               </Link>
               
               <Button 
                 variant="secondary-light" 
-                size="lg" 
-                className="px-10 py-5 text-xl rounded-full"
+                size="hero" 
+                className="rounded-lg"
                 onClick={() => setShowQuotation(true)}
               >
                 <Calendar className="mr-3 w-5 h-5" />
@@ -130,78 +130,70 @@ export default function FinalCTASection() {
           </motion.div>
 
           {/* Three Options */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="grid md:grid-cols-3 gap-8 mb-16"
-          >
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
             {[
               {
                 icon: Rocket,
-                title: 'Start Immediately',
-                description: 'Ready to begin? Jump straight into our Product Development Accelerator',
-                action: 'Start Project',
-                href: '/services/product-development-accelerator',
-                color: 'from-green-500 to-emerald-600'
+                title: 'Start Your Project',
+                description: 'Ready to begin? Let\'s turn your idea into reality with our proven process',
+                action: 'Get Started',
+                onClick: () => window.location.href = '/services/product-development-accelerator',
+                iconColor: 'from-blue-500 to-blue-600'
               },
               {
                 icon: MessageCircle,
-                title: 'Have Questions?',
-                description: 'Want to learn more about our Hub & Spoke model and process?',
-                action: 'Learn More',
-                href: '/about/hub-spoke-model',
-                color: 'from-blue-500 to-cyan-600'
+                title: 'Learn My Process',
+                description: 'Understand how I help companies succeed with engineering excellence',
+                action: 'About Me',
+                onClick: () => window.location.href = '/about',
+                iconColor: 'from-purple-500 to-purple-600'
               },
               {
                 icon: Calendar,
-                title: 'Need Consultation?',
-                description: 'Discuss your specific requirements with our engineering experts',
+                title: 'Free Consultation',
+                description: 'Discuss your project and get expert advice at no cost',
                 action: 'Book Call',
-                href: '/contact',
-                color: 'from-purple-500 to-pink-600',
-                modal: 'consultation'
+                onClick: () => setShowConsultation(true),
+                iconColor: 'from-yellow-500 to-orange-500'
               }
             ].map((option, index) => (
               <motion.div
-                key={option.title}
+                key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 group"
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="group"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${option.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <option.icon className="w-8 h-8 text-white" />
-                </div>
-                
-                <h3 className="text-xl font-bold text-white mb-4">
-                  {option.title}
-                </h3>
-                
-                <p className="text-blue-200 mb-6 leading-relaxed">
-                  {option.description}
-                </p>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 h-full flex flex-col">
+                  <div className="text-center mb-6">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${option.iconColor} flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300`}>
+                      <option.icon className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-white mb-4 text-center">
+                    {option.title}
+                  </h3>
+                  
+                  <p className="text-blue-200 leading-relaxed mb-6 text-center flex-grow">
+                    {option.description}
+                  </p>
 
-                {option.modal === 'consultation' ? (
-                  <Button 
-                    variant="primary-light" 
-                    className="w-full"
-                    onClick={() => setShowConsultation(true)}
-                  >
-                    {option.action}
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                ) : (
-                  <Link href={option.href}>
-                    <Button variant="primary-light" className="w-full">
+                  <div className="mt-auto">
+                    <Button
+                      variant="primary-light"
+                      size="default"
+                      className="w-full"
+                      onClick={option.onClick}
+                    >
                       {option.action}
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
-                  </Link>
-                )}
+                  </div>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Final Trust Elements */}
           <motion.div
@@ -212,10 +204,10 @@ export default function FinalCTASection() {
           >
             <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
-                { icon: '🚀', text: '12-20 Week Delivery' },
-                { icon: '💰', text: '30-50% Cost Savings' },
-                { icon: '🏆', text: 'German Quality Standards' },
-                { icon: '🌍', text: '24/7 Global Support' }
+                { icon: '⚡', text: 'Fast 12-20 Week Delivery' },
+                { icon: '💰', text: 'Cost-Effective Solutions' },
+                { icon: '🏆', text: '26+ Years Experience' },
+                { icon: '🤝', text: 'Personal Attention' }
               ].map((feature, index) => (
                 <div key={index} className="text-white/80">
                   <div className="text-3xl mb-2">{feature.icon}</div>
@@ -226,7 +218,7 @@ export default function FinalCTASection() {
 
             <div className="mt-8 text-center">
               <p className="text-blue-300 text-sm">
-                🔒 No upfront costs • 💯 Satisfaction guaranteed • 🤝 Trusted by 100+ companies
+                🔒 Transparent process • 💯 Personal commitment • 🌍 Based in Germany
               </p>
             </div>
           </motion.div>

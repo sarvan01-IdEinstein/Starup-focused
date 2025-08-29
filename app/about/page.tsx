@@ -2,45 +2,25 @@
 
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import MotionWrapper from '@/components/shared/MotionWrapper';
-import TeamSection from '@/components/about/TeamSection';
+import UnifiedSection from '@/components/shared/UnifiedSection';
+import UnifiedCard from '@/components/shared/UnifiedCard';
+import UnifiedHero from '@/components/shared/UnifiedHero';
 import TimelineSection from '@/components/about/TimelineSection';
-import { TeamMember, TimelineEvent } from '@/lib/types';
+import { TimelineEvent } from '@/lib/types';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { UnifiedConsultationCard } from '@/components/shared/UnifiedConsultationCard';
 
 const stats = [
   { label: 'Years of Global Engineering Experience', value: '26+' },
-  { label: 'Years at Mann + Hummel (2011-2025)', value: '14' },
-  { label: 'Major Projects Led & Delivered', value: '50+' },
+  { label: 'Years in Advanced R&D & Innovation', value: '14+' },
+  { label: 'Countries Worked In', value: '3' },
   { label: 'Patents Pending & Innovations', value: '2+' }
 ];
 
-const teamMembers: TeamMember[] = [
-  {
-    id: '1',
-    name: 'Saravanakumar',
-    position: 'Founder & Chief Engineering Officer',
-    image: '/images/team/saravanakumar.jpg',
-    bio: 'R&D Project Manager with 23+ years of global engineering experience. Specialized in modular design, filtration systems, and automation. Currently leading innovation projects at Mann + Hummel in Germany while building the bridge between German precision and Indian manufacturing excellence.',
-    social: {
-      linkedin: 'https://linkedin.com',
-      twitter: 'https://twitter.com'
-    },
-    expertise: [
-      'Modular Design & Manufacturing',
-      'Filtration & Fluid Systems',
-      'Automation & Process Optimization',
-      'Cross-Cultural Project Management',
-      'CAD/CAM (SolidWorks, AutoCAD, Creo)',
-      'R&D Innovation & Patents'
-    ],
-    achievements: [
-      '30% cost reduction on modular designs',
-      '€100k savings through automation solutions',
-      'Two patents in filtration technology',
-      '13+ years bridging German-Indian engineering'
-    ]
-  }
-];
+
 
 const timeline: TimelineEvent[] = [
   {
@@ -50,41 +30,65 @@ const timeline: TimelineEvent[] = [
   },
   {
     year: '2001',
-    title: 'Career Launch',
-    description: 'Service & Design Engineer - 6 years in vendor development & manufacturing'
+    title: 'Manufacturing Expertise',
+    description: 'Service & Design Engineer - 6 years mastering vendor development & manufacturing'
   },
   {
     year: '2007',
-    title: 'Singapore Chapter',
-    description: 'Bachelor\'s degree + Automation Design - Global perspective gained'
+    title: 'Global Expansion',
+    description: 'Singapore: Bachelor\'s degree + Automation Design - International perspective gained'
   },
   {
     year: '2011',
-    title: 'Mann + Hummel Singapore',
-    description: 'R&D Engineer - UF module development & filtration technology'
+    title: 'Advanced R&D Focus',
+    description: 'Singapore: Specialized in UF module development & advanced filtration technology'
   },
   {
     year: '2016',
-    title: 'Germany Leadership',
-    description: 'R&D Project Manager - Leading modular design & MBR innovations'
+    title: 'Innovation Leadership',
+    description: 'Germany: Led R&D projects, modular design innovations & cross-cultural teams'
   },
   {
     year: '2025',
     title: 'IdEinstein Founded',
-    description: 'Bridging German precision with global manufacturing excellence'
+    description: 'Bringing 26+ years of engineering excellence directly to startups and innovators'
   }
 ];
 
 const AboutPage = () => {
+  const [showConsultation, setShowConsultation] = useState(false)
+
+  const handleConsultationSubmit = async (data: any) => {
+    try {
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert(`Consultation booked successfully! ${result.message}`)
+        setShowConsultation(false)
+      } else {
+        alert(`Failed to book consultation: ${result.message}`)
+      }
+    } catch (error) {
+      console.error('Consultation booking error:', error)
+      alert('Failed to book consultation. Please try again.')
+    }
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero Section - Modern & Impactful */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 pt-20">
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 pt-20">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
-          <div className="absolute bottom-20 left-40 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
+          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 mix-blend-multiply filter blur-xl animate-pulse rounded-lg"></div>
+          <div className="absolute top-40 right-20 w-72 h-72 bg-yellow-500 mix-blend-multiply filter blur-xl animate-pulse delay-1000 rounded-lg"></div>
+          <div className="absolute bottom-20 left-40 w-72 h-72 bg-pink-500 mix-blend-multiply filter blur-xl animate-pulse delay-2000 rounded-lg"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10 text-center text-white">
@@ -100,11 +104,11 @@ const AboutPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
             >
-              The Bridge Between
+              26+ Years of Engineering Excellence
               <br />
-              <span className="text-yellow-400">German Precision</span>
+              <span className="text-yellow-400">Now Focused</span>
               <br />
-              & <span className="text-blue-400">Indian Innovation</span>
+              on <span className="text-blue-400">Your Success</span>
             </motion.h1>
             
             <motion.p 
@@ -113,22 +117,38 @@ const AboutPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              26+ years of global engineering experience.<br />
-              From automation design to advanced filtration systems.<br />
-              One vision: Seamless cross-continental collaboration.
+              Work directly with an experienced engineer who understands growing company challenges.<br />
+              Streamlined processes. Senior-level expertise. Direct communication.<br />
+              Proven engineering excellence focused on bringing your vision to life.
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              <Button variant="cta" size="lg">
-                Discover My Journey
+              <Button 
+                variant="accelerator" 
+                size="hero" 
+                className="rounded-lg"
+                onClick={() => {
+                  const timelineSection = document.querySelector('#timeline-section');
+                  timelineSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                🚀 Explore My Journey
               </Button>
-              <Button variant="outline" size="lg">
-                View Expertise
+              <Button 
+                variant="secondary-light" 
+                size="hero" 
+                className="rounded-lg"
+                onClick={() => {
+                  const expertiseSection = document.querySelector('#expertise-section');
+                  expertiseSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                View My Expertise
               </Button>
             </motion.div>
           </motion.div>
@@ -143,32 +163,39 @@ const AboutPage = () => {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center"
+              className="w-6 h-10 border-2 border-white/50 flex justify-center rounded-lg"
             >
               <motion.div
                 animate={{ height: ["0%", "30%", "0%"] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-1 bg-white/70 rounded-full mt-2"
+                className="w-1 bg-white/70 mt-2 rounded-lg"
               />
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Stats Section - Enhanced Visual Design */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-yellow-50 opacity-50"></div>
+      {/* Experience Metrics - Premium Design */}
+      <section className="py-20 bg-gradient-to-br from-white via-blue-50 to-indigo-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/30 to-indigo-100/30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4 text-slate-800">Experience That Speaks</h2>
-            <p className="text-xl text-slate-600">Numbers that tell the story of global engineering excellence</p>
+            <div className="inline-flex items-center bg-blue-100 text-blue-800 px-6 py-3 text-sm font-medium mb-6 rounded-lg">
+              🏆 Professional Credentials
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+              Experience That Delivers Results
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Real metrics from a proven engineering career spanning three continents and multiple industries
+            </p>
           </motion.div>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -177,9 +204,13 @@ const AboutPage = () => {
                 transition={{ delay: index * 0.1 }}
                 className="text-center group"
               >
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-6 rounded-2xl shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105 h-32 flex flex-col justify-center">
-                  <div className="text-3xl md:text-4xl font-bold mb-2">{stat.value}</div>
-                  <div className="text-blue-100 font-medium text-sm leading-tight">{stat.label}</div>
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105 border border-gray-100 h-full flex flex-col">
+                  <div className="text-4xl md:text-5xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                    {stat.value}
+                  </div>
+                  <div className="text-gray-700 font-semibold text-sm leading-tight flex-grow flex items-center justify-center">
+                    {stat.label}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -187,94 +218,272 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* The Journey - Interactive Story */}
-      <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="container mx-auto px-4">
+      {/* Why Choose Me - Premium Cards */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
+          <motion.div
+            animate={{
+              backgroundPosition: ['0% 0%', '100% 100%'],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: 'reverse',
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10"
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-800">
-              From <span className="text-orange-600">India</span> to <span className="text-green-600">Singapore</span> to <span className="text-blue-600">Germany</span>
+            <div className="inline-flex items-center bg-blue-100 text-blue-800 px-6 py-3 text-sm font-medium mb-6 rounded-lg">
+              🚀 Startup Advantage
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Why Choose <span className="text-blue-600">Direct Engineering Partnership</span>?
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              A journey of discovery, learning, and building bridges across continents
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              After 26+ years in engineering, I understand what growing companies really need
             </p>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden"
-            >
-              <div className="md:flex">
-                {/* Profile Image */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  className="md:w-1/3 bg-gradient-to-br from-blue-600 to-blue-700 p-8 flex flex-col items-center justify-center text-white"
-                >
-                  <div className="w-32 h-32 rounded-full bg-white/20 mb-6 flex items-center justify-center overflow-hidden">
-                    <img 
-                      src="/images/team/saravanakumar.jpg" 
-                      alt="Saravanakumar" 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.nextElementSibling.style.display = 'flex';
-                      }}
-                    />
-                    <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-3xl font-bold" style={{display: 'none'}}>
-                      SV
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+            {[
+              {
+                icon: '⚡',
+                title: 'Rapid Decision Making',
+                description: 'Streamlined processes and direct communication. Engineering decisions made efficiently.',
+                benefit: 'Speed Advantage',
+                color: 'from-yellow-500 to-orange-500'
+              },
+              {
+                icon: '💰',
+                title: 'Efficient Resource Allocation',
+                description: 'Direct engineering partnership with transparent, competitive rates.',
+                benefit: 'Value Advantage',
+                color: 'from-green-500 to-emerald-500'
+              },
+              {
+                icon: '🎯',
+                title: 'Senior-Level Attention',
+                description: 'Your project receives direct senior engineering focus and expertise.',
+                benefit: 'Quality Advantage',
+                color: 'from-blue-500 to-purple-500'
+              },
+              {
+                icon: '🔧',
+                title: 'Hands-On Engineering',
+                description: 'I personally handle the technical work, bringing 26+ years of experience.',
+                benefit: 'Experience Advantage',
+                color: 'from-purple-500 to-pink-500'
+              },
+              {
+                icon: '🌐',
+                title: 'Global Network',
+                description: 'Access to my proven manufacturing partners across 3 continents.',
+                benefit: 'Network Advantage',
+                color: 'from-cyan-500 to-blue-500'
+              },
+              {
+                icon: '🤝',
+                title: 'Growth-Stage Understanding',
+                description: 'I understand the unique challenges of growing companies and resource optimization.',
+                benefit: 'Partnership Advantage',
+                color: 'from-indigo-500 to-purple-500'
+              }
+            ].map((advantage, index) => (
+              <motion.div
+                key={advantage.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 h-full flex flex-col border border-gray-100">
+                  <div className="text-center mb-6">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${advantage.color} flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300`}>
+                      <span className="text-3xl">{advantage.icon}</span>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Saravanakumar</h3>
-                  <p className="text-blue-100 text-center text-sm">Founder & Chief Engineering Officer</p>
-                  <div className="mt-4 text-center">
-                    <div className="text-2xl font-bold">26+</div>
-                    <div className="text-blue-200 text-sm">Years Experience</div>
-                  </div>
-                </motion.div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
+                    {advantage.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 leading-relaxed mb-4 text-center flex-grow">
+                    {advantage.description}
+                  </p>
 
-                {/* Story Content */}
-                <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  className="md:w-2/3 p-8"
-                >
-                  <h3 className="text-2xl font-bold mb-6 text-slate-800">The Journey Behind IdEinstein</h3>
-                  <div className="space-y-4 text-slate-600 leading-relaxed">
-                    <p>
-                      Our story isn't just about engineering; it's about a journey that spans continents and decades, culminating in a solution to a problem I witnessed firsthand. I began my career in October 2001 as a service and design engineer in India, where I spent six years immersed in the intricacies of vendor development and on-the-ground engineering.
-                    </p>
-                    <p>
-                      This experience gave me a deep appreciation for the manufacturing ecosystem and the challenges of delivering quality at scale. My path then led me to Singapore, where I pursued my bachelor's degree while continuing to work, broadening my perspective on global business and technology.
-                    </p>
-                    <p>
-                      My company then offered me the opportunity to move to Germany, where I spent the next ten years. It was here, at the heart of European engineering excellence, that I identified a critical gap. I saw German companies hesitate to leverage the immense potential of Indian manufacturing, not due to a lack of skill, but because of communication barriers, cultural differences, and a general unfamiliarity with the landscape.
-                    </p>
-                    <p>
-                      After over two decades in the industry, and ten years with the same company, I realized I was uniquely positioned to bridge this gap. I had the language, the cultural understanding, and the technical expertise to connect these two worlds.
-                    </p>
-                    <p className="font-medium text-slate-700">
-                      So, at 42, I made the decision to leave my stable career and embark on a new venture: IdEinstein. IdEinstein was born from the conviction that great engineering knows no borders. We are the bridge that connects German precision with Indian ingenuity, a single point of contact that eliminates the friction and uncertainty of global collaboration. We are not just a service provider; we are a partner, a guide, and a testament to the power of experience in solving real-world problems.
-                    </p>
+                  <div className="mt-auto text-center">
+                    <div className="inline-flex items-center bg-blue-100 text-blue-800 px-3 py-1 text-sm font-medium rounded-lg">
+                      {advantage.benefit}
+                    </div>
                   </div>
-                </motion.div>
-              </div>
-            </motion.div>
+                </div>
+              </motion.div>
+            ))}
           </div>
+
+          {/* Personal Story Card - Enhanced with Better Image Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="max-w-6xl mx-auto"
+          >
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white shadow-xl">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+                {/* Enhanced Image Section */}
+                <div className="lg:col-span-2 text-center">
+                  <div className="relative w-56 h-72 md:w-64 md:h-80 lg:w-72 lg:h-96 mx-auto mb-6 group">
+                    {/* Image Container - Larger to Balance Content */}
+                    <div className="w-full h-full bg-white/20 backdrop-blur-sm flex items-center justify-center overflow-hidden rounded-2xl shadow-2xl border-4 border-white/30 group-hover:scale-105 transition-all duration-300">
+                      <Image 
+                        src="/images/team/saravanakumar.jpg" 
+                        alt="Saravanakumar - Founder & Chief Engineer" 
+                        fill
+                        className="object-cover"
+                        style={{ 
+                          imageRendering: 'auto',
+                          objectPosition: '50% 20%'
+                        }}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                          if (nextElement) {
+                            nextElement.style.display = 'flex';
+                          }
+                        }}
+                      />
+                      <div className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-4xl md:text-5xl font-bold hidden">
+                        SV
+                      </div>
+                    </div>
+                    
+                    {/* Decorative Elements */}
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></div>
+                    <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-blue-300 rounded-full animate-pulse delay-1000"></div>
+                  </div>
+                  
+                  {/* Name and Title */}
+                  <div className="space-y-3">
+                    <h3 className="text-2xl md:text-3xl font-bold">Saravanakumar</h3>
+                    <p className="text-blue-200 text-base md:text-lg font-medium">Founder & Chief Engineer</p>
+                    <div className="flex justify-center items-center space-x-2 mt-3">
+                      <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                      <span className="text-blue-200 text-sm">26+ Years Experience</span>
+                      <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content Section */}
+                <div className="lg:col-span-3 space-y-6">
+                  <div>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                      The Hardest Decision of My Life
+                    </h3>
+                  </div>
+                  
+                  <div className="space-y-5">
+                    <div className="bg-white/10 rounded-lg p-4 border-l-4 border-white/50">
+                      <p className="text-blue-100 leading-relaxed text-lg font-medium">
+                        "I'm Saravanakumar. After 26 years as an engineer and team leader delivering breakthroughs for global firms, 
+                        I left a safe career—so YOU don't have to struggle finding the right bridge."
+                      </p>
+                    </div>
+                    
+                    <blockquote className="text-blue-100 leading-relaxed text-lg border-l-4 border-yellow-400 pl-4">
+                      "For 14 years, I had everything I thought I wanted. A stable position at the same company, colleagues who became family, 
+                      financial security, and a clear path ahead. I'd built my life around this career - from India to Singapore to Germany. 
+                      But something was eating at me."
+                    </blockquote>
+                    
+                    <blockquote className="text-blue-100 leading-relaxed text-lg border-l-4 border-red-300 pl-4">
+                      "Every day, I watched brilliant innovations get stuck in translation. German companies with game-changing ideas couldn't 
+                      connect with India's incredible manufacturing talent. Not because the capability wasn't there, but because the bridge wasn't. 
+                      I was that bridge - and I was trapped inside corporate walls."
+                    </blockquote>
+                    
+                    <blockquote className="text-blue-100 leading-relaxed text-lg border-l-4 border-purple-300 pl-4">
+                      "The sleepless nights started when I realized I'd become part of the problem I desperately wanted to solve. 
+                      At 42, with a family to think about, walking away from 14 years of relationships and security felt terrifying. 
+                      But staying felt like betraying everything I believed in."
+                    </blockquote>
+                    
+                    <blockquote className="text-blue-100 leading-relaxed text-lg border-l-4 border-green-300 pl-4">
+                      "The breaking point came when I looked in the mirror and asked: 'Will I spend the rest of my life knowing I could have 
+                      made a difference but chose comfort instead?' That question haunted me until I couldn't ignore it anymore."
+                    </blockquote>
+                    
+                    <div className="bg-white/5 rounded-lg p-4 border-l-4 border-blue-300">
+                      <p className="text-blue-100 leading-relaxed text-lg font-medium">
+                        "IdEinstein was born from that moment of truth. Sometimes following your calling means giving up everything you've built 
+                        to build something that matters more. I'm not just bridging two countries - I'm bridging the gap between what is 
+                        and what could be."
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Professional Highlights */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                      <div className="text-lg font-bold text-yellow-400">🎯 Direct Partnership</div>
+                      <div className="text-xs text-blue-200">No corporate layers</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
+                      <div className="text-lg font-bold text-yellow-400">🏢 All Company Stages</div>
+                      <div className="text-xs text-blue-200">Startups to enterprises</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Enhanced Timeline */}
-      <TimelineSection events={timeline} />
+      <div id="timeline-section">
+        <TimelineSection events={timeline} />
+      </div>
 
       {/* Expertise Showcase */}
-      <section className="py-20 bg-slate-900 text-white">
-        <div className="container mx-auto px-4">
+      <section id="expertise-section" className="py-20 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
+          <motion.div
+            animate={{
+              backgroundPosition: ['0% 0%', '100% 100%'],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: 'reverse',
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20"
+          />
+        </div>
+
+        {/* Floating Elements */}
+        <motion.div
+          animate={{ y: [-20, 20, -20] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute top-20 left-10 w-20 h-20 bg-blue-500/10 blur-xl rounded-lg"
+        />
+        <motion.div
+          animate={{ y: [20, -20, 20] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/10 blur-xl rounded-lg"
+        />
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -286,11 +495,11 @@ const AboutPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 title: 'Automated Machine Design',
-                description: 'Scalable automation solutions with proven €100k+ cost savings',
+                description: 'Scalable automation solutions with proven cost optimization results',
                 icon: '🤖',
                 skills: ['Assembly Line Automation', 'Equipment Design', 'Process Optimization', 'Cost Reduction']
               },
@@ -312,18 +521,29 @@ const AboutPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-slate-800 p-6 rounded-xl hover:bg-slate-700 transition-all duration-300 group min-h-[280px] flex flex-col"
+                className="group"
               >
-                <div className="text-4xl mb-4">{expertise.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{expertise.title}</h3>
-                <p className="text-slate-300 mb-4 flex-grow">{expertise.description}</p>
-                <div className="space-y-2 mt-auto">
-                  {expertise.skills.map((skill, skillIndex) => (
-                    <div key={skillIndex} className="flex items-center">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                      <span className="text-sm text-slate-400">{skill}</span>
-                    </div>
-                  ))}
+                <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl hover:bg-white/15 transition-all duration-300 hover:scale-105 h-full flex flex-col border border-white/20">
+                  <div className="text-center mb-4">
+                    <div className="text-4xl">{expertise.icon}</div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-3 text-center text-white">
+                    {expertise.title}
+                  </h3>
+                  
+                  <p className="text-blue-200 mb-4 text-center flex-grow">
+                    {expertise.description}
+                  </p>
+                  
+                  <div className="space-y-2 mt-auto">
+                    {expertise.skills.map((skill, skillIndex) => (
+                      <div key={skillIndex} className="flex items-center">
+                        <div className="w-2 h-2 bg-yellow-400 mr-3 rounded-lg"></div>
+                        <span className="text-sm text-blue-200">{skill}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -331,88 +551,204 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Values - Modern Cards */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-slate-50">
-        <div className="container mx-auto px-4">
+      {/* Engineering Philosophy - Premium Design */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
+          <motion.div
+            animate={{
+              backgroundPosition: ['0% 0%', '100% 100%'],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: 'reverse',
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10"
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-6 text-slate-800">Core Values</h2>
-            <p className="text-xl text-slate-600">Principles that guide every project and partnership</p>
+            <div className="inline-flex items-center bg-blue-100 text-blue-800 px-6 py-3 text-sm font-medium mb-6 rounded-lg">
+              🎯 Core Values
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+              Engineering Philosophy
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              The principles that have guided my 26+ year career and now shape every IdEinstein partnership
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
-                title: 'Innovation',
-                description: 'Bridging cultures and technologies to create breakthrough solutions',
                 icon: '💡',
-                color: 'from-blue-600 to-blue-700'
+                title: 'Innovation Through Experience',
+                description: 'Combining proven engineering principles with creative problem-solving to deliver breakthrough solutions',
+                iconColor: 'from-blue-500 to-blue-600',
+                borderColor: 'border-blue-200',
+                bgColor: 'bg-blue-50'
               },
               {
-                title: 'Excellence',
-                description: 'German precision standards applied globally with uncompromising quality',
                 icon: '⭐',
-                color: 'from-yellow-500 to-yellow-600'
+                title: 'German Precision Standards',
+                description: 'Uncompromising quality and attention to detail, applied globally with cultural sensitivity',
+                iconColor: 'from-yellow-500 to-orange-500',
+                borderColor: 'border-yellow-200',
+                bgColor: 'bg-yellow-50'
               },
               {
-                title: 'Sustainability',
-                description: 'Environmental responsibility and long-term value in every design',
                 icon: '🌱',
-                color: 'from-green-600 to-green-700'
+                title: 'Sustainable Engineering',
+                description: 'Environmental responsibility and long-term value creation in every design decision',
+                iconColor: 'from-green-500 to-emerald-500',
+                borderColor: 'border-green-200',
+                bgColor: 'bg-green-50'
               }
             ].map((value, index) => (
               <motion.div
                 key={value.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="group"
               >
-                <div className="bg-white p-8 rounded-2xl shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${value.color} rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    {value.icon}
+                <div className={`${value.bgColor} rounded-2xl p-8 border-2 ${value.borderColor} hover:shadow-xl transition-all duration-300 hover:scale-105 h-full flex flex-col`}>
+                  <div className="text-center mb-6">
+                    <div className={`w-20 h-20 rounded-2xl bg-gradient-to-r ${value.iconColor} flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <span className="text-4xl">{value.icon}</span>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-slate-800">{value.title}</h3>
-                  <p className="text-slate-600 leading-relaxed">{value.description}</p>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+                    {value.title}
+                  </h3>
+                  
+                  <p className="text-gray-700 leading-relaxed text-center flex-grow">
+                    {value.description}
+                  </p>
+
+                  <div className="mt-6 text-center">
+                    <div className={`inline-flex items-center bg-gradient-to-r ${value.iconColor} text-white px-4 py-2 rounded-lg text-sm font-medium shadow-md`}>
+                      Core Principle
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section - Modern & Engaging */}
-      <section className="py-20 bg-gradient-to-r from-blue-900 via-slate-900 to-blue-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600/20 to-yellow-600/20"></div>
-        </div>
-        <div className="container mx-auto px-4 text-center relative z-10">
+          {/* Philosophy Summary */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="max-w-3xl mx-auto"
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-16 text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Bridge Your Engineering Challenges?
-            </h2>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-              Let's discuss how 26+ years of global experience in automation and filtration can accelerate your next project. 
-              From concept to manufacturing, I'm your single point of contact for excellence.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="cta" size="lg">
-                Start a Conversation
-              </Button>
-              <Button variant="outline" size="lg">
-                View Case Studies
-              </Button>
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white shadow-xl max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold mb-4">
+                Engineering Excellence with Startup Agility
+              </h3>
+              <p className="text-blue-100 leading-relaxed">
+                These principles aren't just words on a page - they're the foundation of how I approach every project. 
+                Whether you're a startup with your first prototype or an established company launching a new product line, 
+                you get the same commitment to innovation, precision, and sustainability that has defined my 26+ year career.
+              </p>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* CTA Section - Modern & Engaging */}
+      <section className="py-20 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
+          <motion.div
+            animate={{
+              backgroundPosition: ['0% 0%', '100% 100%'],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: 'reverse',
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20"
+          />
+        </div>
+
+        {/* Floating Elements */}
+        <motion.div
+          animate={{ y: [-20, 20, -20], rotate: [0, 180, 360] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute top-20 left-10 w-20 h-20 bg-blue-500/20 blur-xl rounded-lg"
+        />
+        <motion.div
+          animate={{ y: [20, -20, 20], rotate: [360, 180, 0] }}
+          transition={{ duration: 12, repeat: Infinity }}
+          className="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 blur-xl rounded-lg"
+        />
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              Ready to Transform Your{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400">
+                Idea
+              </span>{' '}
+              into Reality?
+            </h2>
+            <p className="text-xl md:text-2xl text-blue-200 mb-8 leading-relaxed">
+              Work directly with an experienced engineer who understands your startup challenges. 
+              Your next breakthrough is just a conversation away.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
+              <Link href="/services/product-development-accelerator">
+                <Button variant="accelerator" size="hero" className="rounded-lg">
+                  🚀 Start Your Project
+                </Button>
+              </Link>
+              <Button 
+                variant="secondary-light" 
+                size="hero" 
+                className="rounded-lg"
+                onClick={() => setShowConsultation(true)}
+              >
+                Book Free Consultation
+              </Button>
+            </div>
+            
+            <div className="pt-6 border-t border-white/20">
+              <p className="text-blue-300 text-sm">
+                🔒 No commitment required • 💯 Personal attention • 🤝 Direct communication
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Consultation Modal */}
+      <Dialog open={showConsultation} onOpenChange={setShowConsultation}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogTitle className="sr-only">Book a Free Consultation</DialogTitle>
+          <UnifiedConsultationCard
+            type="consultation"
+            onSubmit={handleConsultationSubmit}
+            defaultService="about-consultation"
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

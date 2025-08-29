@@ -22,7 +22,7 @@ const PageHero = ({
   features 
 }: PageHeroProps) => {
   return (
-    <section className="bg-gradient-to-r from-primary/10 to-primary/5 py-12 md:py-16">
+    <section className="bg-gradient-to-r from-primary/10 to-primary/5 pt-20 pb-12 md:pt-24 md:pb-16">
       <div className="container mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

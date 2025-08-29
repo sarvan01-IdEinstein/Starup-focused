@@ -1,5 +1,4 @@
-'use client';
-
+// Server component for structured data - no client-side functionality needed
 // import { CONTACT_INFO } from '@/lib/constants'; // Unused
 
 interface StructuredDataProps {
@@ -163,11 +162,14 @@ export default function StructuredData({ type = 'organization', data }: Structur
 
   if (!structuredData) return null;
 
+  // Ensure deterministic JSON output for consistent server/client rendering
+  const jsonString = JSON.stringify(structuredData, null, 2);
+
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(structuredData, null, 2),
+        __html: jsonString,
       }}
     />
   );

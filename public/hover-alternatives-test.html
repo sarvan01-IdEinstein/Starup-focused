@@ -1,0 +1,102 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Hover State Alternatives Test</title>
+            <style>
+                .hover-test-container {
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                
+                .hover-button {
+                    padding: 15px 30px;
+                    background: #2196F3;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-size: 16px;
+                }
+                
+                /* Hover states for mouse users */
+                @media (hover: hover) {
+                    .hover-button:hover {
+                        background: #1976D2;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                    }
+                }
+                
+                /* Active states for touch users */
+                .hover-button:active {
+                    background: #1565C0;
+                    transform: translateY(0);
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                }
+                
+                /* Focus states for keyboard users */
+                .hover-button:focus {
+                    outline: 2px solid #FF9800;
+                    outline-offset: 2px;
+                }
+                
+                .info-box {
+                    padding: 15px;
+                    background: #f5f5f5;
+                    border-radius: 4px;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Hover State Alternatives Test</h1>
+            
+            <div class="info-box">
+                <h3>Testing Different Interaction States:</h3>
+                <ul>
+                    <li><strong>Mouse users:</strong> See hover effects on mouse over</li>
+                    <li><strong>Touch users:</strong> See active effects on tap</li>
+                    <li><strong>Keyboard users:</strong> See focus effects when tabbing</li>
+                </ul>
+            </div>
+            
+            <div class="hover-test-container">
+                <button class="hover-button">Hover/Touch/Focus Test Button 1</button>
+                <button class="hover-button">Hover/Touch/Focus Test Button 2</button>
+                <button class="hover-button">Hover/Touch/Focus Test Button 3</button>
+            </div>
+            
+            <script>
+                // Detect input method
+                let isTouch = false;
+                
+                document.addEventListener('touchstart', () => {
+                    isTouch = true;
+                    document.body.classList.add('touch-device');
+                });
+                
+                document.addEventListener('mousemove', () => {
+                    if (!isTouch) {
+                        document.body.classList.add('mouse-device');
+                    }
+                });
+                
+                // Add click feedback for touch devices
+                document.querySelectorAll('.hover-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        if (isTouch) {
+                            // Provide haptic feedback simulation
+                            button.style.transform = 'scale(0.95)';
+                            setTimeout(() => {
+                                button.style.transform = '';
+                            }, 150);
+                        }
+                    });
+                });
+            </script>
+        </body>
+        </html>

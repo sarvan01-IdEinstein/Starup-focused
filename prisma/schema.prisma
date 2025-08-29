@@ -13,19 +13,20 @@ datasource db {
 // Enhanced User management with Zoho integration
 model User {
   id                  String   @id @default(cuid())
-  email               String   @unique
-  name                String?
+  email               String   @unique @db.VarChar(255)
+  name                String?  @db.VarChar(255)
   role                Role     @default(USER)
-  avatar              String?
+  avatar              String?  @db.VarChar(500)
   
   // Zoho Integration Fields
-  contactId           String?  @unique // Zoho CRM Contact ID
-  accountId           String?  // Zoho CRM Account ID
+  contactId           String?  @unique @db.VarChar(100) // Zoho CRM Contact ID
+  accountId           String?  @db.VarChar(100) // Zoho CRM Account ID
   userRole            UserRole @default(CLIENT_USER)
-  clientDashboardId   String?  @unique // Custom unique identifier
-  zohoRefreshToken    String?  // Encrypted OAuth token
+  clientDashboardId   String?  @unique @db.VarChar(100) // Custom unique identifier
+  zohoRefreshToken    String?  @db.Text // Encrypted OAuth token
   preferences         Json     @default("{}")
   lastLogin           DateTime?
+  deletedAt           DateTime? // Soft delete support
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -35,6 +36,10 @@ model User {
   auditLogs     AuditLog[]
   notifications Notification[]
   
+  @@index([email])
+  @@index([contactId])
+  @@index([userRole])
+  @@index([lastLogin])
   @@map("users")
 }
 
@@ -56,16 +61,20 @@ enum UserRole {
 // Contact form submissions
 model Contact {
   id        String   @id @default(cuid())
-  name      String
-  email     String
-  subject   String?
-  message   String
-  phone     String?
-  company   String?
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  subject   String?  @db.VarChar(500)
+  message   String   @db.Text
+  phone     String?  @db.VarChar(50)
+  company   String?  @db.VarChar(255)
   status    ContactStatus @default(PENDING)
+  deletedAt DateTime? // Soft delete support
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
   @@map("contacts")
 }
 
@@ -312,3 +321,9 @@ model FileMetadata {
   
   @@map("file_metadata")
 }
+// Security Configuration
+// Ensure your DATABASE_URL includes SSL parameters:
+// postgresql://user:pass@host:5432/db?sslmode=require&sslcert=client-cert.pem&sslkey=client-key.pem&sslrootcert=ca-cert.pem
+
+// For production, always use SSL connections
+// For development, use sslmode=require at minimum

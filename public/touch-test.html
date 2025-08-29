@@ -1,0 +1,84 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Touch Event Support Test</title>
+            <style>
+                .touch-test-area {
+                    width: 300px;
+                    height: 200px;
+                    background: #f0f0f0;
+                    border: 2px solid #ccc;
+                    margin: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    user-select: none;
+                }
+                .touch-active {
+                    background: #4CAF50;
+                    color: white;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Touch Event Support Test</h1>
+            <div class="touch-test-area" id="touchArea">
+                Touch or click this area
+            </div>
+            <div id="touch-results"></div>
+            
+            <script>
+                const touchArea = document.getElementById('touchArea');
+                const results = document.getElementById('touch-results');
+                const supportedEvents = [];
+                
+                // Test touch events
+                if ('ontouchstart' in window) {
+                    supportedEvents.push('Touch Events');
+                    
+                    touchArea.addEventListener('touchstart', (e) => {
+                        touchArea.classList.add('touch-active');
+                        touchArea.textContent = 'Touch detected!';
+                    });
+                    
+                    touchArea.addEventListener('touchend', (e) => {
+                        setTimeout(() => {
+                            touchArea.classList.remove('touch-active');
+                            touchArea.textContent = 'Touch or click this area';
+                        }, 500);
+                    });
+                }
+                
+                // Test pointer events
+                if ('onpointerdown' in window) {
+                    supportedEvents.push('Pointer Events');
+                }
+                
+                // Test mouse events (fallback)
+                touchArea.addEventListener('mousedown', (e) => {
+                    if (!('ontouchstart' in window)) {
+                        touchArea.classList.add('touch-active');
+                        touchArea.textContent = 'Click detected!';
+                    }
+                });
+                
+                touchArea.addEventListener('mouseup', (e) => {
+                    if (!('ontouchstart' in window)) {
+                        setTimeout(() => {
+                            touchArea.classList.remove('touch-active');
+                            touchArea.textContent = 'Touch or click this area';
+                        }, 500);
+                    }
+                });
+                
+                // Display results
+                results.innerHTML = '<h3>Supported Events:</h3>' + 
+                    (supportedEvents.length > 0 ? 
+                        supportedEvents.map(event => `<p>✅ ${event}</p>`).join('') :
+                        '<p>❌ No touch events supported</p>');
+                
+                window.touchTestResults = supportedEvents;
+            </script>
+        </body>
+        </html>

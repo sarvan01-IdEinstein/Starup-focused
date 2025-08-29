@@ -1,0 +1,32 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                .grid-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    gap: 20px;
+                    padding: 20px;
+                }
+                .grid-item {
+                    background: #f0f0f0;
+                    padding: 20px;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="grid-container">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item">Item 2</div>
+                <div class="grid-item">Item 3</div>
+            </div>
+            <script>
+                const container = document.querySelector('.grid-container');
+                const computedStyle = window.getComputedStyle(container);
+                const isGridSupported = computedStyle.display === 'grid';
+                document.body.setAttribute('data-grid-supported', isGridSupported);
+            </script>
+        </body>
+        </html>

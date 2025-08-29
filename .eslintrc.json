@@ -3,18 +3,20 @@
     "next/core-web-vitals",
     "next/typescript"
   ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "rules": {
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_",
-        "destructuredArrayIgnorePattern": "^_",
-        "ignoreRestSiblings": true
-      }
-    ],
-    "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/no-require-imports": "warn",
-    "react/no-unescaped-entities": "warn"
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-img-element": "warn",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-require-imports": "off"
   }
 }

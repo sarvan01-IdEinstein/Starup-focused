@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { logger } from '@/lib/secure-logger'
 
 interface ZohoTokenResponse {
   access_token: string
@@ -21,7 +22,7 @@ export abstract class ZohoBaseService {
     }
 
     try {
-      console.log(`🔄 Getting fresh access token for ${this.constructor.name}...`)
+      logger.logTokenOperation('refresh', this.constructor.name, false)
       
       const response = await axios.post(`${this.baseUrl}/oauth/v2/token`, null, {
         params: {
@@ -36,10 +37,10 @@ export abstract class ZohoBaseService {
       this.accessToken = data.access_token
       this.tokenExpiry = Date.now() + (data.expires_in * 1000) - 60000 // 1 minute buffer
 
-      console.log(`✅ Access token obtained for ${this.constructor.name}`)
+      logger.logTokenOperation('refresh', this.constructor.name, true)
       return this.accessToken
     } catch (error) {
-      console.error(`❌ Error getting access token for ${this.constructor.name}:`, error)
+      logger.error(`Failed to authenticate with Zoho ${this.constructor.name}`, error)
       throw new Error(`Failed to authenticate with Zoho ${this.constructor.name}`)
     }
   }
@@ -48,23 +49,27 @@ export abstract class ZohoBaseService {
     const token = await this.getAccessToken()
     
     try {
-      console.log(`📤 ${this.constructor.name} API Request: ${method} ${url}`)
+      const headers = {
+        'Authorization': `Zoho-oauthtoken ${token}`,
+        'Content-Type': 'application/json'
+      }
       
+      logger.logApiRequest(method, url, headers)
+      
+      const startTime = Date.now()
       const response = await axios({
         method,
         url,
         data,
         params,
-        headers: {
-          'Authorization': `Zoho-oauthtoken ${token}`,
-          'Content-Type': 'application/json'
-        }
+        headers
       })
       
-      console.log(`📥 ${this.constructor.name} API Response: ${response.status}`)
+      const responseTime = Date.now() - startTime
+      logger.logApiResponse(response.status, url, responseTime)
       return response.data
     } catch (error) {
-      console.error(`❌ ${this.constructor.name} API request failed:`, error)
+      logger.error(`${this.constructor.name} API request failed`, error)
       throw error
     }
   }

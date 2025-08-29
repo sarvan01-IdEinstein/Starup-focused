@@ -1,0 +1,35 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                .flex-container {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 20px;
+                    background: #f5f5f5;
+                }
+                .flex-item {
+                    flex: 1;
+                    margin: 0 10px;
+                    padding: 20px;
+                    background: white;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="flex-container">
+                <div class="flex-item">Flex Item 1</div>
+                <div class="flex-item">Flex Item 2</div>
+                <div class="flex-item">Flex Item 3</div>
+            </div>
+            <script>
+                const container = document.querySelector('.flex-container');
+                const computedStyle = window.getComputedStyle(container);
+                const isFlexSupported = computedStyle.display === 'flex';
+                document.body.setAttribute('data-flex-supported', isFlexSupported);
+            </script>
+        </body>
+        </html>

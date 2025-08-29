@@ -60,7 +60,7 @@ export default function UnifiedCard({
       transition={{ duration: 0.6, delay }}
       className={`group ${className}`}
     >
-      <div className={`bg-white rounded-2xl p-8 shadow-lg border border-gray-100 h-full transition-all duration-300 ${
+      <div className={`bg-white rounded-2xl p-8 shadow-lg border border-gray-100 h-full transition-all duration-300 flex flex-col ${
         hover ? 'hover:shadow-2xl hover:border-gray-200 hover:scale-105' : ''
       }`}>
         {Icon && (
@@ -81,7 +81,9 @@ export default function UnifiedCard({
           {description}
         </p>
 
-        {children}
+        <div className="flex-grow">
+          {children}
+        </div>
       </div>
     </motion.div>
   )

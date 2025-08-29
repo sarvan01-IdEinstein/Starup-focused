@@ -123,3 +123,22 @@ html {
   align-items: center;
   justify-content: center;
 }
+
+/* Modal positioning fix for tall content */
+@layer components {
+  .dialog-content-scrollable {
+    position: fixed !important;
+    top: 2rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-height: calc(100vh - 4rem) !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+  }
+  
+  /* Ensure modal content is always visible */
+  [data-radix-dialog-content] {
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+}

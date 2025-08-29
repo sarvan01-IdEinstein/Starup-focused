@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface UnifiedSectionProps {
+  id?: string
   title: string
   subtitle?: string
   description?: string
@@ -13,6 +14,7 @@ interface UnifiedSectionProps {
 }
 
 export default function UnifiedSection({
+  id,
   title,
   subtitle,
   description,
@@ -27,7 +29,7 @@ export default function UnifiedSection({
   }
 
   return (
-    <section className={`py-20 ${backgroundClasses[background]} ${className}`}>
+    <section id={id} className={`py-20 ${backgroundClasses[background]} ${className}`}>
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

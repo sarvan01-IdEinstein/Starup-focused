@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { zohoCRM, zohoWorkDrive } from '@/lib/zoho/index'
+import { handleApiError } from '@/lib/error-handler'
 
 export async function POST(request: NextRequest) {
   try {
@@ -194,11 +195,14 @@ Contact ID: ${contactId}`,
     }
 
   } catch (error) {
-    console.error('❌ Quote request error:', error)
+    const apiError = handleApiError(error);
     return NextResponse.json(
-      { error: 'Failed to process quote request' },
-      { status: 500 }
-    )
+      { 
+        success: false, 
+        error: apiError.message 
+      },
+      { status: apiError.statusCode }
+    );
   }
 }
 

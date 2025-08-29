@@ -55,12 +55,12 @@ const buttonVariants = cva(
         // For dark backgrounds - white outline  
         "secondary-light": "bg-transparent text-white border-2 border-white/60 hover:bg-white hover:text-gray-900 active:bg-gray-100 active:text-gray-900 shadow-lg hover:shadow-xl backdrop-blur-sm",
         
-        // === STARTUP ACCELERATOR (Einstein Gold #F59E0B) ===
-        // Special gold button for startup services - using exact brand gold
-        accelerator: "bg-[#F59E0B] text-white hover:bg-[#D97706] active:bg-[#B45309] shadow-xl hover:shadow-2xl hover:shadow-[#F59E0B]/25 transform hover:scale-[1.02] font-bold",
+        // === STARTUP ACCELERATOR (Einstein Gold Gradient) ===
+        // Special gold gradient button for startup services - premium gold gradient
+        accelerator: "bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600 active:from-yellow-700 active:to-orange-700 shadow-xl hover:shadow-2xl hover:shadow-yellow-500/25 transform hover:scale-[1.02] font-semibold",
         
-        // Gold outline version with brand gold
-        "accelerator-outline": "bg-transparent text-[#F59E0B] border-2 border-[#F59E0B] hover:bg-[#F59E0B] hover:text-white active:bg-[#D97706] shadow-lg hover:shadow-xl hover:shadow-[#F59E0B]/25",
+        // Gold outline version with gradient on hover
+        "accelerator-outline": "bg-transparent text-yellow-600 border-2 border-yellow-500 hover:bg-gradient-to-r hover:from-yellow-500 hover:to-orange-500 hover:text-white hover:border-transparent active:from-yellow-600 active:to-orange-600 shadow-lg hover:shadow-xl hover:shadow-yellow-500/25",
         
         // === UTILITY BUTTONS ===
         // Subtle actions - using brand blue
@@ -77,19 +77,40 @@ const buttonVariants = cva(
         
         // Header specific (for navigation) - using brand blue
         header: "bg-white text-[#1E40AF] hover:bg-blue-50 hover:text-[#1E3A8A] active:bg-[#1E40AF] active:text-white shadow-md hover:shadow-lg font-medium rounded-lg",
+        
+        // === LEGACY/COMPATIBILITY VARIANTS ===
+        // Default - maps to primary
+        default: "bg-[#1E40AF] text-white hover:bg-[#1E3A8A] active:bg-[#1E3A8A] shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300",
+        
+        // Outline - maps to secondary
+        outline: "bg-transparent text-[#1E40AF] border-2 border-[#1E40AF] hover:bg-[#1E40AF] hover:text-white active:bg-[#1E3A8A] shadow-md hover:shadow-lg",
+        
+        // CTA variants
+        cta: "bg-[#1E40AF] text-white hover:bg-[#1E3A8A] active:bg-[#1E3A8A] shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300",
+        "cta-white": "bg-white text-[#1E40AF] hover:bg-blue-50 hover:text-[#1E3A8A] active:bg-blue-100 shadow-xl hover:shadow-2xl border-2 border-white/20 backdrop-blur-sm",
+        
+        // Header CTA
+        "header-cta": "bg-[#1E40AF] text-white hover:bg-[#1E3A8A] active:bg-[#1E3A8A] shadow-lg hover:shadow-xl font-medium rounded-lg px-6",
+        
+        // Blue contrast
+        "blue-contrast": "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-lg hover:shadow-xl",
+        
+        // Floating buttons
+        floating: "bg-[#1E40AF] text-white hover:bg-[#1E3A8A] active:bg-[#1E3A8A] shadow-xl hover:shadow-2xl rounded-full transform hover:scale-[1.05] transition-all duration-300",
       },
       size: {
         sm: "h-9 px-3 text-sm",
         default: "h-10 px-4 py-2",
         lg: "h-11 px-8 text-base",
         xl: "h-12 px-10 text-lg",
+        hero: "h-14 px-10 text-lg font-semibold",
         icon: "h-10 w-10",
         "icon-sm": "h-8 w-8",
         "icon-lg": "h-12 w-12",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "default",
     },
   }

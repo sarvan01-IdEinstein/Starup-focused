@@ -1,0 +1,55 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>ES6 Support Test</title>
+        </head>
+        <body>
+            <div id="results"></div>
+            <script>
+                const results = [];
+                
+                // Test arrow functions
+                try {
+                    const arrowFunc = () => 'arrow function works';
+                    results.push({ feature: 'Arrow Functions', supported: true });
+                } catch (e) {
+                    results.push({ feature: 'Arrow Functions', supported: false });
+                }
+                
+                // Test template literals
+                try {
+                    const name = 'World';
+                    const greeting = `Hello ${name}!`;
+                    results.push({ feature: 'Template Literals', supported: true });
+                } catch (e) {
+                    results.push({ feature: 'Template Literals', supported: false });
+                }
+                
+                // Test destructuring
+                try {
+                    const obj = { a: 1, b: 2 };
+                    const { a, b } = obj;
+                    results.push({ feature: 'Destructuring', supported: true });
+                } catch (e) {
+                    results.push({ feature: 'Destructuring', supported: false });
+                }
+                
+                // Test async/await
+                try {
+                    const asyncTest = async () => 'async works';
+                    results.push({ feature: 'Async/Await', supported: true });
+                } catch (e) {
+                    results.push({ feature: 'Async/Await', supported: false });
+                }
+                
+                // Display results
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '<h2>ES6 Feature Support:</h2>' + 
+                    results.map(r => `<p>${r.feature}: ${r.supported ? '✅' : '❌'}</p>`).join('');
+                
+                // Store results for testing
+                window.es6TestResults = results;
+            </script>
+        </body>
+        </html>

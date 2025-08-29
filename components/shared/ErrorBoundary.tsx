@@ -63,7 +63,7 @@ class ErrorBoundary extends Component<Props, State> {
             <div className="space-x-4">
               <Button
                 onClick={() => window.location.reload()}
-                variant="default"
+                variant="primary"
               >
                 <RefreshCcw className="w-4 h-4 mr-2" />
                 Refresh Page

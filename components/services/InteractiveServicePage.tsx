@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { 
-  ArrowRight, 
-  ArrowLeft, 
-  CheckCircle, 
-  Clock, 
-  Users, 
-  Target, 
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle,
+  Clock,
+  Users,
+  Target,
   Zap,
   ChevronRight,
   ChevronLeft,
@@ -21,15 +21,13 @@ import {
   Printer,
   Boxes,
   Cog,
-  Shield,
   Globe,
   Info,
   Wrench,
-  CheckSquare
-} from 'lucide-react'
-import ContactWidget from '@/components/shared/ContactWidget'
-import { UnifiedConsultationCard } from '@/components/shared/UnifiedConsultationCard'
-import { useRouter } from 'next/navigation'
+  CheckSquare,
+} from "lucide-react";
+import { UnifiedConsultationCard } from "@/components/shared/UnifiedConsultationCard";
+import { useRouter } from "next/navigation";
 
 // Icon mapping helper
 const iconMap: Record<string, any> = {
@@ -38,46 +36,44 @@ const iconMap: Record<string, any> = {
   Boxes,
   Cog,
   Zap,
-  Shield,
   Target,
   Clock,
   Globe,
   Users,
   Wrench,
   CheckSquare,
-  Info
-}
+  Info,
+};
 
 interface ProcessStep {
-  title: string
-  description: string
-  timeline: string
-  keyPoints: string[]
-  deliverables: string[]
+  title: string;
+  description: string;
+  timeline: string;
+  keyPoints: string[];
+  deliverables: string[];
 }
 
 interface ServiceSpec {
-  category: string
+  category: string;
   items: Array<{
-    label: string
-    value: string
-  }>
+    label: string;
+    value: string;
+  }>;
 }
 
 interface InteractiveServicePageProps {
-  title: string
-  description: string
-  icon: string
-  features: string[]
-  specifications: ServiceSpec[]
-  process: ProcessStep[]
+  title: string;
+  description: string;
+  icon: string;
+  features: string[];
+  process: ProcessStep[];
   benefits: Array<{
-    icon: string
-    title: string
-    description: string
-    iconColor?: string
-  }>
-  startupRelevant?: boolean
+    icon: string;
+    title: string;
+    description: string;
+    iconColor?: string;
+  }>;
+  startupRelevant?: boolean;
 }
 
 export default function InteractiveServicePage({
@@ -85,19 +81,18 @@ export default function InteractiveServicePage({
   description,
   icon: serviceIconName,
   features,
-  specifications,
   process,
   benefits,
-  startupRelevant = false
+  startupRelevant = false,
 }: InteractiveServicePageProps) {
-  const router = useRouter()
-  const [showQuotation, setShowQuotation] = useState(false)
-  const [currentStep, setCurrentStep] = useState(0)
-  const ServiceIcon = iconMap[serviceIconName] || Boxes
+  const router = useRouter();
+  const [showQuotation, setShowQuotation] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const ServiceIcon = iconMap[serviceIconName] || Boxes;
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="min-h-screen relative">
@@ -108,7 +103,7 @@ export default function InteractiveServicePage({
         className="fixed bottom-8 left-8 z-50"
       >
         <Button
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/solutions/for-enterprises#services")}
           variant="outline"
           className="shadow-lg hover:shadow-xl transition-all duration-300 border-primary/20 hover:border-primary/40 bg-white hover:bg-white text-primary/80 hover:text-primary rounded-full px-6"
         >
@@ -133,13 +128,19 @@ export default function InteractiveServicePage({
                   </div>
                   <div>
                     <p className="text-blue-800 font-medium">
-                      <strong>Startup?</strong> This service is included in our Product Development Accelerator Package
+                      <strong>Startup?</strong> This service is included in our
+                      Product Development Accelerator Package
                     </p>
-                    <p className="text-blue-600 text-sm">Save 30-40% with our complete startup solution</p>
+                    <p className="text-blue-600 text-sm">
+                      Save 30-40% with our complete startup solution
+                    </p>
                   </div>
                 </div>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="/services/product-development-accelerator" className="text-blue-600 border-blue-300 hover:bg-blue-50">
+                  <Link
+                    href="/services/product-development-accelerator"
+                    className="text-blue-600 border-blue-300 hover:bg-blue-50"
+                  >
                     View Package
                   </Link>
                 </Button>
@@ -164,9 +165,13 @@ export default function InteractiveServicePage({
                     Professional Engineering Service
                   </span>
                 </div>
-                <h1 className="text-4xl font-bold mb-6 text-gray-900">{title}</h1>
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">{description}</p>
-                
+                <h1 className="text-4xl font-bold mb-6 text-gray-900">
+                  {title}
+                </h1>
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                  {description}
+                </p>
+
                 {/* Metrics */}
                 <div className="flex flex-wrap gap-6 mb-8">
                   <div className="flex items-center text-sm text-gray-600">
@@ -184,7 +189,7 @@ export default function InteractiveServicePage({
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
+                  <Button
                     size="lg"
                     onClick={() => setShowQuotation(true)}
                     className="bg-primary hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-full"
@@ -192,13 +197,13 @@ export default function InteractiveServicePage({
                     Get Service Quote
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="lg"
                     asChild
                     className="border-primary text-primary hover:bg-blue-50 px-8 py-4 text-lg font-semibold rounded-full"
                   >
-                    <Link href="/solutions/for-enterprises">
+                    <Link href="/solutions/for-enterprises#services">
                       View All Services
                     </Link>
                   </Button>
@@ -216,7 +221,9 @@ export default function InteractiveServicePage({
                     <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-primary to-blue-600 flex items-center justify-center">
                       <ServiceIcon className="w-12 h-12 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{title}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      {title}
+                    </h3>
                     <p className="text-gray-600 max-w-md">{description}</p>
                   </div>
                 </div>
@@ -233,8 +240,12 @@ export default function InteractiveServicePage({
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Service Features</h2>
-              <p className="text-xl text-gray-600">What's included in this service</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Service Features
+              </h2>
+              <p className="text-xl text-gray-600">
+                What's included in this service
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -262,8 +273,12 @@ export default function InteractiveServicePage({
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Process</h2>
-              <p className="text-xl text-gray-600">Step-by-step methodology for quality results</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Our Process
+              </h2>
+              <p className="text-xl text-gray-600">
+                Step-by-step methodology for quality results
+              </p>
             </motion.div>
 
             {/* Process Navigation */}
@@ -278,14 +293,14 @@ export default function InteractiveServicePage({
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
-                
+
                 <div className="flex space-x-2 px-4">
                   {process.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentStep(index)}
                       className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentStep ? 'bg-primary' : 'bg-gray-300'
+                        index === currentStep ? "bg-primary" : "bg-gray-300"
                       }`}
                     />
                   ))}
@@ -294,7 +309,11 @@ export default function InteractiveServicePage({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setCurrentStep(Math.min(process.length - 1, currentStep + 1))}
+                  onClick={() =>
+                    setCurrentStep(
+                      Math.min(process.length - 1, currentStep + 1)
+                    )
+                  }
                   disabled={currentStep === process.length - 1}
                   className="rounded-full"
                 >
@@ -321,10 +340,16 @@ export default function InteractiveServicePage({
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center p-6">
                             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-primary to-blue-600 flex items-center justify-center">
-                              <span className="text-white font-bold text-lg">{currentStep + 1}</span>
+                              <span className="text-white font-bold text-lg">
+                                {currentStep + 1}
+                              </span>
                             </div>
-                            <h4 className="text-lg font-semibold text-gray-900 mb-2">Step {currentStep + 1}</h4>
-                            <p className="text-gray-600">{process[currentStep].title}</p>
+                            <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                              Step {currentStep + 1}
+                            </h4>
+                            <p className="text-gray-600">
+                              {process[currentStep].title}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -344,7 +369,7 @@ export default function InteractiveServicePage({
                         <h3 className="text-2xl font-bold text-gray-900 mb-4">
                           {process[currentStep].title}
                         </h3>
-                        
+
                         <p className="text-gray-600 mb-6 leading-relaxed">
                           {process[currentStep].description}
                         </p>
@@ -352,14 +377,21 @@ export default function InteractiveServicePage({
                         {/* Key Points */}
                         {process[currentStep].keyPoints.length > 0 && (
                           <div className="mb-6">
-                            <h4 className="font-semibold text-gray-900 mb-3">Key Points:</h4>
+                            <h4 className="font-semibold text-gray-900 mb-3">
+                              Key Points:
+                            </h4>
                             <ul className="space-y-2">
-                              {process[currentStep].keyPoints.slice(0, 3).map((point, idx) => (
-                                <li key={idx} className="flex items-start text-sm text-gray-600">
-                                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                                  {point}
-                                </li>
-                              ))}
+                              {process[currentStep].keyPoints
+                                .slice(0, 3)
+                                .map((point, idx) => (
+                                  <li
+                                    key={idx}
+                                    className="flex items-start text-sm text-gray-600"
+                                  >
+                                    <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                                    {point}
+                                  </li>
+                                ))}
                             </ul>
                           </div>
                         )}
@@ -367,16 +399,20 @@ export default function InteractiveServicePage({
                         {/* Deliverables */}
                         {process[currentStep].deliverables.length > 0 && (
                           <div>
-                            <h4 className="font-semibold text-gray-900 mb-3">Deliverables:</h4>
+                            <h4 className="font-semibold text-gray-900 mb-3">
+                              Deliverables:
+                            </h4>
                             <div className="flex flex-wrap gap-2">
-                              {process[currentStep].deliverables.map((deliverable, idx) => (
-                                <span
-                                  key={idx}
-                                  className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
-                                >
-                                  {deliverable}
-                                </span>
-                              ))}
+                              {process[currentStep].deliverables.map(
+                                (deliverable, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                                  >
+                                    {deliverable}
+                                  </span>
+                                )
+                              )}
                             </div>
                           </div>
                         )}
@@ -397,13 +433,17 @@ export default function InteractiveServicePage({
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose This Service</h2>
-              <p className="text-xl text-gray-600">Key benefits that make us the right choice</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Why Choose This Service
+              </h2>
+              <p className="text-xl text-gray-600">
+                Key benefits that make us the right choice
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {benefits.map((benefit, index) => {
-                const BenefitIcon = iconMap[benefit.icon] || Target
+                const BenefitIcon = iconMap[benefit.icon] || Target;
                 return (
                   <motion.div
                     key={benefit.title}
@@ -414,63 +454,27 @@ export default function InteractiveServicePage({
                   >
                     <Card className="h-full hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
                       <CardContent className="p-8 text-center h-full flex flex-col">
-                        <div className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r ${benefit.iconColor || 'from-blue-500 to-blue-600'} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                        <div
+                          className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-r ${benefit.iconColor || "from-blue-500 to-blue-600"} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                        >
                           <BenefitIcon className="w-8 h-8 text-white" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-4">{benefit.title}</h3>
-                        <p className="text-gray-600 leading-relaxed flex-grow">{benefit.description}</p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-4">
+                          {benefit.title}
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed flex-grow">
+                          {benefit.description}
+                        </p>
                       </CardContent>
                     </Card>
                   </motion.div>
-                )
+                );
               })}
             </div>
           </div>
         </section>
 
-        {/* Specifications */}
-        <section className="py-16 bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Service Specifications</h2>
-              <p className="text-xl text-gray-600">Detailed specifications and capabilities</p>
-            </motion.div>
 
-            <div className="max-w-6xl mx-auto">
-              {specifications.map((spec, index) => (
-                <motion.div
-                  key={spec.category}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="mb-12 last:mb-0"
-                >
-                  <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">{spec.category}</h3>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {spec.items.map((item, idx) => (
-                      <Card key={idx} className="hover:shadow-lg transition-shadow border-0 shadow-md">
-                        <CardContent className="p-6">
-                          <div className="flex flex-col space-y-3">
-                            <span className="text-sm font-medium text-primary uppercase tracking-wide">
-                              {item.label}
-                            </span>
-                            <span className="text-lg font-semibold text-gray-900 leading-relaxed">
-                              {item.value}
-                            </span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Final CTA */}
         <section className="py-16">
@@ -480,11 +484,16 @@ export default function InteractiveServicePage({
               whileInView={{ opacity: 1, y: 0 }}
               className="text-center"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
-              <p className="text-xl text-gray-600 mb-8">Contact us to discuss your project requirements and get a detailed quote</p>
-              
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Ready to Get Started?
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Contact us to discuss your project requirements and get a
+                detailed quote
+              </p>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
+                <Button
                   size="lg"
                   onClick={() => setShowQuotation(true)}
                   className="bg-primary hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold rounded-full"
@@ -492,13 +501,13 @@ export default function InteractiveServicePage({
                   Get Service Quote
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="lg"
                   asChild
                   className="border-primary text-primary hover:bg-blue-50 px-8 py-4 text-lg font-semibold rounded-full"
                 >
-                  <Link href="/solutions/for-enterprises">
+                  <Link href="/solutions/for-enterprises#services">
                     View All Services
                   </Link>
                 </Button>
@@ -516,36 +525,39 @@ export default function InteractiveServicePage({
             type="quotation"
             onSubmit={async (data) => {
               try {
-                console.log('📝 Submitting quote request from service page:', data)
-                
-                const response = await fetch('/api/quotes', {
-                  method: 'POST',
+                console.log(
+                  "📝 Submitting quote request from service page:",
+                  data
+                );
+
+                const response = await fetch("/api/quotes", {
+                  method: "POST",
                   headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                   },
                   body: JSON.stringify(data),
-                })
+                });
 
-                const result = await response.json()
+                const result = await response.json();
 
                 if (response.ok) {
-                  console.log('✅ Quote submitted successfully:', result)
-                  alert(`Quote request submitted successfully! Reference: ${result.quoteReference}`)
-                  setShowQuotation(false)
+                  console.log("✅ Quote submitted successfully:", result);
+                  alert(
+                    `Quote request submitted successfully! Reference: ${result.quoteReference}`
+                  );
+                  setShowQuotation(false);
                 } else {
-                  console.error('❌ Quote submission failed:', result)
-                  alert(`Failed to submit quote: ${result.error}`)
+                  console.error("❌ Quote submission failed:", result);
+                  alert(`Failed to submit quote: ${result.error}`);
                 }
               } catch (error) {
-                console.error('❌ Quote submission error:', error)
-                alert('Failed to submit quote request. Please try again.')
+                console.error("❌ Quote submission error:", error);
+                alert("Failed to submit quote request. Please try again.");
               }
             }}
           />
         </DialogContent>
       </Dialog>
-
-      <ContactWidget />
     </div>
-  )
+  );
 }

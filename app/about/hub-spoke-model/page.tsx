@@ -2,34 +2,60 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Globe, Zap, Shield, Users, TrendingUp, DollarSign, Clock, Target } from 'lucide-react'
+import { ArrowRight, Globe, Zap, Shield, Users, TrendingUp, DollarSign, Clock } from 'lucide-react'
 import Link from 'next/link'
-import ContactWidget from '@/components/shared/ContactWidget'
 import UnifiedHero from '@/components/shared/UnifiedHero'
 import UnifiedSection from '@/components/shared/UnifiedSection'
 import UnifiedCard from '@/components/shared/UnifiedCard'
+import { useState } from 'react'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { UnifiedConsultationCard } from '@/components/shared/UnifiedConsultationCard'
 
 export default function HubSpokeModelPage() {
+  const [showConsultation, setShowConsultation] = useState(false)
+
+  const handleConsultationSubmit = async (data: any) => {
+    try {
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert(`Consultation booked successfully! ${result.message}`)
+        setShowConsultation(false)
+      } else {
+        alert(`Failed to book consultation: ${result.message}`)
+      }
+    } catch (error) {
+      console.error('Consultation booking error:', error)
+      alert('Failed to book consultation. Please try again.')
+    }
+  }
+
   return (
     <div className="min-h-screen">
       {/* Unified Hero Section */}
       <UnifiedHero
         badge={{
           icon: Globe,
-          text: "Our Unique Business Model"
+          text: "My Hub & Spoke Business Model"
         }}
         title="Hub & Spoke"
         highlight="Model"
-        subtitle="The Bridge Between German Precision and Indian Innovation"
-        description="Our unique model delivers world-class engineering at startup-friendly prices by combining the best of both worlds."
+        subtitle="26+ Years of Experience Connecting German Standards with Global Expertise"
+        description="I personally manage your project while leveraging my vetted network of specialized partners to deliver German-quality engineering at competitive prices."
         primaryCTA={{
-          text: "Try Our Startup Package",
+          text: "See My Startup Package",
           href: "/services/product-development-accelerator",
           icon: ArrowRight
         }}
         secondaryCTA={{
           text: "Schedule Consultation",
-          href: "/contact"
+          onClick: () => setShowConsultation(true)
         }}
         metrics={[
           { icon: DollarSign, text: '30-50% Cost Savings' },
@@ -40,9 +66,9 @@ export default function HubSpokeModelPage() {
 
       {/* Visual Model Section */}
       <UnifiedSection
-        title="How Our Model Works"
-        subtitle="Strategic Bridge"
-        description="IdEinstein operates as a strategic bridge, connecting German engineering standards with Indian technical expertise to deliver exceptional value"
+        title="How My Hub & Spoke Model Works"
+        subtitle="Strategic Coordination"
+        description="I serve as the central hub, personally managing your project while coordinating with my vetted network of specialized partners (spokes) to deliver German engineering standards at competitive prices"
         background="white"
       >
         <div className="max-w-6xl mx-auto mb-16">
@@ -74,13 +100,25 @@ export default function HubSpokeModelPage() {
                   <Shield className="w-4 h-4 text-yellow-900" />
                 </div>
               </motion.div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">German Hub</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">The Hub (Me)</h3>
               <div className="bg-gradient-to-br from-red-50 to-yellow-50 rounded-xl p-6 border border-red-100">
                 <ul className="text-gray-700 space-y-2 text-sm">
-                  <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Quality Standards</li>
-                  <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Client Relations</li>
-                  <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Project Management</li>
-                  <li className="flex items-center"><span className="text-red-500 mr-2">•</span>Final Review</li>
+                  <li className="flex items-center">
+                    <span className="text-red-500 mr-2">•</span>
+                    <span>26+ Years Experience</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-red-500 mr-2">•</span>
+                    <span>German Quality Standards</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-red-500 mr-2">•</span>
+                    <span>Project Management</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-red-500 mr-2">•</span>
+                    <span>Client Communication</span>
+                  </li>
                 </ul>
               </div>
             </motion.div>
@@ -108,16 +146,28 @@ export default function HubSpokeModelPage() {
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute -top-1 -right-1 w-6 h-6 bg-blue-400 rounded-full"
+                  className="absolute -top-1 -right-1 w-6 h-6 bg-blue-400 rounded-lg"
                 />
               </motion.div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">IdEinstein Bridge</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Hub Coordination</h3>
               <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-100">
                 <ul className="text-gray-700 space-y-2 text-sm">
-                  <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>Seamless Integration</li>
-                  <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>Quality Assurance</li>
-                  <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>Cultural Translation</li>
-                  <li className="flex items-center"><span className="text-blue-500 mr-2">•</span>24/7 Coordination</li>
+                  <li className="flex items-center">
+                    <span className="text-blue-500 mr-2">•</span>
+                    <span>Central Coordination</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-blue-500 mr-2">•</span>
+                    <span>Quality Assurance</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-blue-500 mr-2">•</span>
+                    <span>Partner Management</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-blue-500 mr-2">•</span>
+                    <span>Seamless Integration</span>
+                  </li>
                 </ul>
               </div>
             </motion.div>
@@ -146,13 +196,25 @@ export default function HubSpokeModelPage() {
                   <Globe className="w-4 h-4 text-green-900" />
                 </div>
               </motion.div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Indian Spoke</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">The Spokes (Partners)</h3>
               <div className="bg-gradient-to-br from-orange-50 to-green-50 rounded-xl p-6 border border-green-100">
                 <ul className="text-gray-700 space-y-2 text-sm">
-                  <li className="flex items-center"><span className="text-green-500 mr-2">•</span>Technical Execution</li>
-                  <li className="flex items-center"><span className="text-green-500 mr-2">•</span>Innovation & R&D</li>
-                  <li className="flex items-center"><span className="text-green-500 mr-2">•</span>Cost Optimization</li>
-                  <li className="flex items-center"><span className="text-green-500 mr-2">•</span>Rapid Development</li>
+                  <li className="flex items-center">
+                    <span className="text-green-500 mr-2">•</span>
+                    <span>Manufacturing Specialists</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-green-500 mr-2">•</span>
+                    <span>Testing Facilities</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-green-500 mr-2">•</span>
+                    <span>Technical Experts</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="text-green-500 mr-2">•</span>
+                    <span>Cost Optimization</span>
+                  </li>
                 </ul>
               </div>
             </motion.div>
@@ -162,9 +224,9 @@ export default function HubSpokeModelPage() {
 
       {/* Key Benefits Section */}
       <UnifiedSection
-        title="Why This Model Works"
+        title="Why the Hub & Spoke Model Works"
         subtitle="Six Key Advantages"
-        description="Six key advantages that make our Hub & Spoke model the perfect choice for startups and enterprises"
+        description="Six key advantages of my Hub & Spoke approach where I serve as your central hub coordinating with specialized partners"
         background="gray"
       >
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -189,14 +251,14 @@ export default function HubSpokeModelPage() {
             },
             {
               icon: Users,
-              title: "Technical Excellence",
-              description: "Access to India's vast pool of skilled engineers and latest technological innovations.",
+              title: "Specialized Expertise",
+              description: "Access to my carefully vetted network of manufacturing specialists, testing facilities, and technical experts.",
               iconColor: "from-orange-500 to-red-600"
             },
             {
               icon: Globe,
-              title: "Cultural Bridge",
-              description: "Deep understanding of both German business culture and Indian technical capabilities.",
+              title: "Cross-Cultural Expertise",
+              description: "26+ years bridging German engineering standards with global manufacturing capabilities and business practices.",
               iconColor: "from-indigo-500 to-purple-600"
             },
             {
@@ -221,8 +283,8 @@ export default function HubSpokeModelPage() {
       {/* Startup vs Enterprise Benefits */}
       <UnifiedSection
         title="Perfect for Every Business Size"
-        subtitle="Scalable Solutions"
-        description="Whether you're a startup or enterprise, our Hub & Spoke model delivers value at every stage"
+        subtitle="Scalable Hub & Spoke Solutions"
+        description="Whether you're a startup or enterprise, my Hub & Spoke model delivers value at every stage"
         background="gradient"
       >
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -300,91 +362,248 @@ export default function HubSpokeModelPage() {
 
       {/* Process Flow Section */}
       <UnifiedSection
-        title="Our Integrated Process"
+        title="My Project Management Process"
         subtitle="Four Seamless Steps"
-        description="Four seamless steps that bridge German precision with Indian innovation"
+        description="How I personally manage your project from initial consultation to final delivery with German engineering standards"
         background="white"
       >
         <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {[
             {
               step: "1",
-              title: "German Consultation",
-              description: "Initial consultation and requirement analysis with German engineering standards",
-              location: "🇩🇪 Germany",
+              title: "Personal Consultation",
+              description: "Direct consultation with me to understand your requirements and apply German engineering standards",
+              location: "🎯 Direct Access",
               iconColor: "from-red-500 to-yellow-500"
             },
             {
               step: "2",
-              title: "Project Planning",
-              description: "Detailed project planning and team allocation with quality checkpoints",
-              location: "🌉 Bridge",
+              title: "Strategic Planning",
+              description: "I create detailed project plans and select the right partners for your specific needs",
+              location: "📋 My Management",
               iconColor: "from-blue-500 to-purple-500"
             },
             {
               step: "3",
-              title: "Indian Execution",
-              description: "Technical execution by skilled Indian engineers with continuous monitoring",
-              location: "🇮🇳 India",
+              title: "Coordinated Execution",
+              description: "I coordinate with selected partners while maintaining continuous quality oversight",
+              location: "🔗 My Coordination",
               iconColor: "from-orange-500 to-green-500"
             },
             {
               step: "4",
-              title: "German Quality Review",
-              description: "Final quality review and client delivery meeting German standards",
-              location: "🇩🇪 Germany",
+              title: "Quality Assurance",
+              description: "I personally review all deliverables to ensure they meet German engineering standards",
+              location: "✅ My Responsibility",
               iconColor: "from-purple-500 to-pink-500"
             }
           ].map((phase, index) => (
-            <UnifiedCard
+            <motion.div
               key={index}
-              title={phase.title}
-              description={phase.description}
-              iconColor={phase.iconColor}
-              delay={index * 0.2}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="group"
             >
-              <div className="mt-4 text-center">
-                <div className={`w-16 h-16 bg-gradient-to-r ${phase.iconColor} text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4`}>
-                  {phase.step}
+              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 h-full transition-all duration-300 hover:shadow-2xl hover:border-gray-200 hover:scale-105 flex flex-col">
+                <div className="text-center mb-6">
+                  <div className={`w-16 h-16 bg-gradient-to-r ${phase.iconColor} text-white rounded-lg flex items-center justify-center text-2xl font-bold mx-auto`}>
+                    {phase.step}
+                  </div>
                 </div>
-                <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">{phase.location}</span>
+                
+                <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+                  {phase.title}
+                </h3>
+                
+                <p className="text-gray-600 leading-relaxed mb-6 text-center flex-grow">
+                  {phase.description}
+                </p>
+
+                <div className="text-center mt-auto">
+                  <span className="text-xs bg-gray-100 px-3 py-1 rounded-lg">{phase.location}</span>
+                </div>
               </div>
-            </UnifiedCard>
+            </motion.div>
           ))}
         </div>
       </UnifiedSection>
 
-      {/* Success Metrics */}
+      {/* Social Proof & Credibility Section */}
       <UnifiedSection
-        title="Proven Results"
-        subtitle="Track Record"
-        description="Numbers that demonstrate the power of our Hub & Spoke model"
+        title="Proven Track Record"
+        subtitle="26+ Years of Engineering Excellence"
+        description="My Hub & Spoke model is built on decades of experience managing complex engineering projects across cultures and industries"
         background="gray"
       >
-        <div className="grid md:grid-cols-4 gap-8 text-center max-w-5xl mx-auto">
-          {[
-            { metric: "30-50%", label: "Cost Savings", iconColor: "from-green-500 to-emerald-600" },
-            { metric: "24/7", label: "Development Cycle", iconColor: "from-blue-500 to-cyan-600" },
-            { metric: "100%", label: "German Quality Standards", iconColor: "from-purple-500 to-violet-600" },
-            { metric: "12-20", label: "Weeks to Market", iconColor: "from-orange-500 to-red-600" }
-          ].map((stat, index) => (
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center"
+          >
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl font-bold text-white">26+</span>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Years Experience</h3>
+            <p className="text-gray-600">Global engineering project management with German precision standards</p>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center"
+          >
+            <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl font-bold text-white">🇩🇪</span>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">German Standards</h3>
+            <p className="text-gray-600">German-trained precision with international manufacturing expertise</p>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center"
+          >
+            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Globe className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Global Network</h3>
+            <p className="text-gray-600">Vetted manufacturing partners across multiple countries and industries</p>
+          </motion.div>
+        </div>
+
+        {/* Experience Foundation */}
+        <div className="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Built on Engineering Excellence
+            </h3>
+            <p className="text-gray-600">
+              Decades of cross-cultural engineering experience applied to modern business challenges
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            {[
+              { number: '26+ Years', label: 'German Training', sublabel: 'Automotive precision' },
+              { number: 'Cross-Cultural', label: 'Bridge Builder', sublabel: 'German-Indian expertise' },
+              { number: 'Quality First', label: 'Standards', sublabel: 'Never compromise' },
+              { number: 'Personal', label: 'Commitment', sublabel: 'Your success matters' }
+            ].map((stat, index) => (
+              <div key={stat.label} className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-2">
+                  {stat.number}
+                </div>
+                <div className="font-semibold text-gray-900 mb-1">
+                  {stat.label}
+                </div>
+                <div className="text-sm text-gray-600">
+                  {stat.sublabel}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </UnifiedSection>
+
+      {/* My Vision & Commitment */}
+      <UnifiedSection
+        title="My Vision for the Hub & Spoke Model"
+        subtitle="Building Something Meaningful"
+        description="As a startup, I'm committed to creating authentic value through honest engineering partnerships and transparent business practices"
+        background="gradient"
+      >
+        <div className="max-w-6xl mx-auto">
+          {/* Core Values */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
             <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center"
             >
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className={`text-5xl font-bold bg-gradient-to-r ${stat.iconColor} bg-clip-text text-transparent mb-2`}
-              >
-                {stat.metric}
-              </motion.div>
-              <div className="text-gray-600 font-medium">{stat.label}</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                <div className="text-4xl mb-4">🎯</div>
+                <h4 className="text-xl font-bold mb-3 text-white">Authentic Approach</h4>
+                <p className="text-blue-100">No false promises or inflated metrics - just honest engineering expertise and transparent communication</p>
+              </div>
             </motion.div>
-          ))}
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-center"
+            >
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                <div className="text-4xl mb-4">🤝</div>
+                <h4 className="text-xl font-bold mb-3 text-white">Partnership Focus</h4>
+                <p className="text-blue-100">Building long-term relationships based on trust, quality delivery, and mutual success</p>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                <div className="text-4xl mb-4">🚀</div>
+                <h4 className="text-xl font-bold mb-3 text-white">Startup Mindset</h4>
+                <p className="text-blue-100">Agile, cost-conscious, and focused on delivering real value without corporate overhead</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* My Commitment */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20"
+          >
+            <h3 className="text-2xl font-bold text-white mb-6">
+              My Personal Commitment to You
+            </h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: 'Direct Communication',
+                  description: 'You work directly with me - no account managers, no middlemen, just clear engineering discussions'
+                },
+                {
+                  title: 'Quality Standards',
+                  description: 'Every project meets German engineering standards through my personal oversight and experience'
+                },
+                {
+                  title: 'Transparent Pricing',
+                  description: 'Fair pricing with no hidden costs - you pay for expertise and results, not corporate overhead'
+                }
+              ].map((commitment, index) => (
+                <div key={commitment.title} className="text-center">
+                  <h4 className="text-lg font-bold mb-3 text-yellow-300">{commitment.title}</h4>
+                  <p className="text-blue-200 text-sm">{commitment.description}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-8 p-6 bg-white/5 rounded-xl border border-white/10">
+              <p className="text-blue-200 italic">
+                "As a startup, I believe in building trust through honest work and authentic relationships. 
+                My Hub & Spoke model isn't about impressive statistics - it's about delivering real engineering value 
+                through personal attention and carefully selected partnerships."
+              </p>
+              <div className="text-yellow-300 font-medium mt-4">
+                - Saravanakumar, Founder
+              </div>
+            </div>
+          </motion.div>
         </div>
       </UnifiedSection>
 
@@ -392,28 +611,40 @@ export default function HubSpokeModelPage() {
       <UnifiedSection
         title="Ready to Experience the Hub & Spoke Advantage?"
         subtitle="Get Started Today"
-        description="Join startups and enterprises who have discovered the power of combining German precision with Indian innovation"
+        description="Experience the benefits of working with an experienced engineer who coordinates specialized expertise when you need it"
         background="gradient"
       >
         <div className="max-w-2xl mx-auto text-center">
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/services/product-development-accelerator">
-              <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white px-10 py-5 text-xl font-bold rounded-full shadow-2xl hover:shadow-yellow-500/25 transition-all duration-300 transform hover:scale-105">
-                🚀 Try Our Startup Package
+              <Button variant="accelerator" size="hero">
+                🚀 See My Startup Package
                 <ArrowRight className="ml-3 w-6 h-6" />
               </Button>
             </Link>
             
-            <Link href="/contact">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 px-10 py-5 text-xl font-semibold rounded-full backdrop-blur-sm">
-                Schedule Consultation
-              </Button>
-            </Link>
+            <Button 
+              variant="secondary-light" 
+              size="hero"
+              onClick={() => setShowConsultation(true)}
+            >
+              Schedule Consultation
+            </Button>
           </div>
         </div>
       </UnifiedSection>
 
-      <ContactWidget />
+      {/* Consultation Modal */}
+      <Dialog open={showConsultation} onOpenChange={setShowConsultation}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogTitle className="sr-only">Schedule a Consultation</DialogTitle>
+          <UnifiedConsultationCard
+            type="consultation"
+            onSubmit={handleConsultationSubmit}
+            defaultService="hub-spoke-model"
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { zohoCRM } from '@/lib/zoho/index';
+import { zohoCRM, zohoWorkDrive } from '@/lib/zoho/index';
+import { handleApiError } from '@/lib/error-handler';
 
 // Consultation request validation schema
 const consultationSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
-  company: z.string().min(2, 'Company name is required'),
-  phone: z.string().optional(),
-  serviceType: z.enum([
+  phone: z.string().min(1, 'Phone number is required'),
+  company: z.string().optional(),
+  service: z.enum([
     'research-development',
     'cad-modeling',
     'machine-design',
@@ -19,10 +20,10 @@ const consultationSchema = z.object({
     'supplier-sourcing',
     'technical-documentation'
   ]),
-  projectDescription: z.string().min(20, 'Please provide more details about your project'),
-  timeline: z.enum(['urgent', '1-2-weeks', '1-month', '2-3-months', 'flexible']),
-  budget: z.enum(['under-5k', '5k-15k', '15k-50k', '50k-plus', 'discuss']),
-  preferredContactMethod: z.enum(['email', 'phone', 'video-call']).optional(),
+  description: z.string().min(10, 'Please provide more details about your project'),
+  date: z.string().min(1, 'Please select a date'),
+  time: z.string().min(1, 'Please select a time'),
+  files: z.array(z.instanceof(File)).optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -35,12 +36,33 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // zohoCRM is already imported at the top
+    // Handle both JSON and FormData
+    let validatedData;
+    const contentType = request.headers.get('content-type');
     
-    const body = await request.json();
-    
-    // Validate input
-    const validatedData = consultationSchema.parse(body);
+    if (contentType?.includes('multipart/form-data')) {
+      // Handle form data with files
+      const formData = await request.formData();
+      const data = {
+        name: formData.get('name') as string,
+        email: formData.get('email') as string,
+        phone: formData.get('phone') as string,
+        company: formData.get('company') as string || '',
+        service: formData.get('service') as string,
+        description: formData.get('description') as string,
+        date: formData.get('date') as string,
+        time: formData.get('time') as string,
+        files: formData.getAll('files') as File[]
+      };
+      
+      // Validate input (excluding files for now)
+      const { files, ...dataWithoutFiles } = data;
+      validatedData = { ...consultationSchema.omit({ files: true }).parse(dataWithoutFiles), files };
+    } else {
+      // Handle JSON data
+      const body = await request.json();
+      validatedData = consultationSchema.parse(body);
+    }
     
     // Create lead in Zoho CRM for consultation request
     console.log('📝 Creating consultation lead in Zoho CRM...')
@@ -61,7 +83,7 @@ export async function POST(request: NextRequest) {
       'technical-documentation': 'Technical Documentation'
     }
     
-    const serviceTypeName = serviceTypeMap[validatedData.serviceType] || validatedData.serviceType
+    const serviceTypeName = serviceTypeMap[validatedData.service] || validatedData.service
     
     // Create lead in Zoho CRM with proper field names
     const zohoLead = await zohoCRM.createLead({
@@ -75,22 +97,60 @@ export async function POST(request: NextRequest) {
       Industry: 'Engineering Services',
       Description: `Consultation Request for ${serviceTypeName}
       
-Project Description: ${validatedData.projectDescription}
-Timeline: ${validatedData.timeline}
-Budget: ${validatedData.budget}
-Preferred Contact: ${validatedData.preferredContactMethod || 'Not specified'}
+Project Description: ${validatedData.description}
+Preferred Date: ${validatedData.date}
+Preferred Time: ${validatedData.time}
+Files Attached: ${validatedData.files?.length || 0} files
 
 Submitted via website consultation form.`
     })
     
     console.log('✅ Consultation lead created in Zoho CRM:', zohoLead.id)
 
+    // Handle file uploads if present
+    const uploadedFiles = [];
+    if (validatedData.files && validatedData.files.length > 0) {
+      console.log('📁 Uploading files to Zoho WorkDrive...');
+      
+      try {
+        // Create customer folder in WorkDrive
+        const customerFolderId = await zohoWorkDrive.getProjectFolder(
+          validatedData.email,
+          `Consultation_${zohoLead.id}`
+        );
+        
+        // Upload each file
+        for (const file of validatedData.files) {
+          const bytes = await file.arrayBuffer();
+          const buffer = Buffer.from(bytes);
+          
+          const uploadResult = await zohoWorkDrive.uploadFile(
+            customerFolderId,
+            buffer,
+            file.name
+          );
+          
+          uploadedFiles.push({
+            name: file.name,
+            size: file.size,
+            id: uploadResult.id
+          });
+        }
+        
+        console.log('✅ Files uploaded successfully:', uploadedFiles.length);
+      } catch (fileError) {
+        console.error('❌ File upload error:', fileError);
+        // Don't fail the entire request if file upload fails
+      }
+    }
+
     return NextResponse.json(
       { 
         success: true, 
         message: 'Consultation request submitted successfully! Our team will contact you within 24 hours.',
         leadId: zohoLead.id,
-        serviceType: serviceTypeName
+        serviceType: serviceTypeName,
+        filesUploaded: uploadedFiles.length
       },
       { status: 200 }
     );
@@ -106,13 +166,13 @@ Submitted via website consultation form.`
       );
     }
 
-    console.error('Consultation request error:', error);
+    const apiError = handleApiError(error);
     return NextResponse.json(
       { 
         success: false, 
-        message: 'Internal server error' 
+        error: apiError.message 
       },
-      { status: 500 }
+      { status: apiError.statusCode }
     );
   }
 }

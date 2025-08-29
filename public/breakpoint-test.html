@@ -1,0 +1,56 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Breakpoint Test</title>
+            <style>
+        /* Test breakpoints consistency */
+        .breakpoint-test {
+            padding: 10px;
+            background: red;
+        }
+        
+        /* Mobile */
+        @media (max-width: 767px) {
+            .breakpoint-test { background: green; }
+        }
+        
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .breakpoint-test { background: blue; }
+        }
+        
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .breakpoint-test { background: purple; }
+        }</style>
+        </head>
+        <body>
+            <div class="breakpoint-test">
+                <h2>Breakpoint Test</h2>
+                <p>Background color indicates current breakpoint:</p>
+                <ul>
+                    <li>Green: Mobile (≤767px)</li>
+                    <li>Blue: Tablet (768px-1023px)</li>
+                    <li>Purple: Desktop (≥1024px)</li>
+                    <li>Red: Error/Default</li>
+                </ul>
+            </div>
+            <script>
+                function detectBreakpoint() {
+                    const width = window.innerWidth;
+                    let breakpoint = 'unknown';
+                    
+                    if (width <= 767) breakpoint = 'mobile';
+                    else if (width <= 1023) breakpoint = 'tablet';
+                    else breakpoint = 'desktop';
+                    
+                    document.body.setAttribute('data-breakpoint', breakpoint);
+                    document.body.setAttribute('data-width', width);
+                }
+                
+                detectBreakpoint();
+                window.addEventListener('resize', detectBreakpoint);
+            </script>
+        </body>
+        </html>

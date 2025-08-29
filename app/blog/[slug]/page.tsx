@@ -6,6 +6,7 @@ import { Calendar, Clock, User, Tag, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getBlogPost, getBlogPosts } from "@/lib/blog-data";
 import BlogFloatingButtons from "@/components/blog/BlogFloatingButtons";
+import SimpleBlogCTA from "@/components/blog/SimpleBlogCTA";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -184,20 +185,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </article>
 
-      {/* Call to Action */}
-      <section className="container mx-auto px-4 mt-16">
-        <div className="max-w-4xl mx-auto bg-primary text-white rounded-xl p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready to Start Your Project?</h2>
-          <p className="text-white/90 mb-6">
-            Let our expert team help you bring your engineering ideas to life.
-          </p>
-          <Link href="/contact">
-            <Button variant="blue-contrast">
-              Get Started Today
-            </Button>
-          </Link>
-        </div>
-      </section>
+      <SimpleBlogCTA />
     </div>
   );
 }

@@ -16,12 +16,14 @@ interface UnifiedHeroProps {
   description?: string;
   primaryCTA: {
     text: string;
-    href: string;
+    href?: string;
+    onClick?: () => void;
     icon?: LucideIcon;
   };
   secondaryCTA?: {
     text: string;
-    href: string;
+    href?: string;
+    onClick?: () => void;
   };
   metrics?: Array<{
     icon: LucideIcon;
@@ -156,32 +158,60 @@ export default function UnifiedHero({
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Link href={primaryCTA.href}>
+            {primaryCTA.href ? (
+              <Link href={primaryCTA.href}>
+                <Button
+                  variant="accelerator"
+                  size="hero"
+                  className="rounded-lg"
+                >
+                  {primaryCTA.text}
+                  {primaryCTA.icon ? (
+                    <primaryCTA.icon className="ml-3 w-6 h-6" />
+                  ) : (
+                    <ArrowRight className="ml-3 w-6 h-6" />
+                  )}
+                </Button>
+              </Link>
+            ) : (
               <Button
-                size="lg"
-                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-yellow-500/25 transition-all duration-300"
+                variant="accelerator"
+                size="hero"
+                className="rounded-lg"
+                onClick={primaryCTA.onClick}
               >
                 {primaryCTA.text}
                 {primaryCTA.icon ? (
-                  <primaryCTA.icon className="ml-2 w-5 h-5" />
+                  <primaryCTA.icon className="ml-3 w-6 h-6" />
                 ) : (
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-3 w-6 h-6" />
                 )}
               </Button>
-            </Link>
+            )}
 
             {secondaryCTA && (
-              <Link href={secondaryCTA.href}>
+              secondaryCTA.href ? (
+                <Link href={secondaryCTA.href}>
+                  <Button
+                    variant="secondary-light"
+                    size="hero"
+                    className="rounded-lg"
+                  >
+                    {secondaryCTA.text}
+                  </Button>
+                </Link>
+              ) : (
                 <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm"
+                  variant="secondary-light"
+                  size="hero"
+                  className="rounded-lg"
+                  onClick={secondaryCTA.onClick}
                 >
                   {secondaryCTA.text}
                 </Button>
-              </Link>
+              )
             )}
           </motion.div>
         </motion.div>

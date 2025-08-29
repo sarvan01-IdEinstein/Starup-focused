@@ -1,0 +1,44 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Font Loading Test</title>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                
+                .font-test {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 24px;
+                    padding: 20px;
+                    margin: 20px 0;
+                }
+                
+                .font-weight-400 { font-weight: 400; }
+                .font-weight-500 { font-weight: 500; }
+                .font-weight-600 { font-weight: 600; }
+                .font-weight-700 { font-weight: 700; }
+            </style>
+        </head>
+        <body>
+            <h1>Font Loading Test</h1>
+            <div class="font-test font-weight-400">Inter Regular (400)</div>
+            <div class="font-test font-weight-500">Inter Medium (500)</div>
+            <div class="font-test font-weight-600">Inter SemiBold (600)</div>
+            <div class="font-test font-weight-700">Inter Bold (700)</div>
+            
+            <script>
+                // Test font loading
+                if ('fonts' in document) {
+                    document.fonts.ready.then(() => {
+                        console.log('Fonts loaded successfully');
+                        document.body.setAttribute('data-fonts-loaded', 'true');
+                    });
+                } else {
+                    // Fallback for older browsers
+                    setTimeout(() => {
+                        document.body.setAttribute('data-fonts-loaded', 'fallback');
+                    }, 2000);
+                }
+            </script>
+        </body>
+        </html>

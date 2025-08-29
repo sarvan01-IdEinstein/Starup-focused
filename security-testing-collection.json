@@ -1,0 +1,134 @@
+{
+  "info": {
+    "name": "Security Testing Collection",
+    "description": "Comprehensive security testing for IdEinstein website",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Authentication Security Tests",
+      "item": [
+        {
+          "name": "SQL Injection - Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin' OR '1'='1\",\"password\":\"password\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "signin"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Should reject SQL injection attempt', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "    pm.expect(pm.response.json()).to.not.have.property('token');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "XSS - Contact Form",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"<script>alert('XSS')</script>\",\"email\":\"test@example.com\",\"message\":\"Test message\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "contact"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Should sanitize XSS attempt', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const response = pm.response.text();",
+                  "    pm.expect(response).to.not.include('<script>');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "API Security Tests",
+      "item": [
+        {
+          "name": "Rate Limiting Test",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Should have rate limiting headers', function () {",
+                  "    pm.expect(pm.response.headers.get('X-RateLimit-Limit')).to.exist;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ideinstein-test-env",
+  "name": "IdEinstein Test Environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "enabled": true
+    }
+  ]
+}

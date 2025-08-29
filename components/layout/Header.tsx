@@ -24,6 +24,12 @@ const menuItems = [
     href: '#',
     submenu: [
       {
+        category: 'Enterprise Solutions',
+        items: [
+          { title: 'Enterprise Overview', href: '/solutions/for-enterprises', featured: true, description: 'Complete enterprise benefits & service portfolio' }
+        ]
+      },
+      {
         category: 'Engineering Services',
         items: [
           { title: 'Research & Development', href: '/services/research-development' },
@@ -52,14 +58,13 @@ const menuItems = [
         category: 'Why Choose IdEinstein',
         items: [
           { title: 'Hub & Spoke Model', href: '/about/hub-spoke-model' },
-          { title: 'About Our Team', href: '/about' },
-          { title: 'Success Stories', href: '/blog' }
+          { title: 'About Me', href: '/about' }
         ]
       }
     ]
   },
   { title: 'Resources', href: '/blog' },
-  { title: 'Get Quote', href: '/contact' }
+  { title: 'Contact Us', href: '/contact' }
 ];
 
 const Header = () => {
@@ -350,14 +355,23 @@ const Header = () => {
                                     ${(subItem as any).featured ? 'bg-blue-50 border-l-4 border-blue-500 font-semibold' : ''}
                                   `}
                                 >
-                                  <span className="text-base font-medium">
-                                    {subItem.title}
-                                  </span>
-                                  {(subItem as any).featured && (
-                                    <span className="ml-2 text-xs bg-blue-500 text-white px-2 py-1 rounded-full">
-                                      Featured
-                                    </span>
-                                  )}
+                                  <div className="flex items-start justify-between">
+                                    <div className="flex-1">
+                                      <span className="text-base font-medium">
+                                        {subItem.title}
+                                      </span>
+                                      {(subItem as any).description && (
+                                        <p className="text-sm text-gray-500 mt-1">
+                                          {(subItem as any).description}
+                                        </p>
+                                      )}
+                                    </div>
+                                    {(subItem as any).featured && (
+                                      <span className="ml-2 text-xs bg-blue-500 text-white px-2 py-1 rounded-full flex-shrink-0">
+                                        Featured
+                                      </span>
+                                    )}
+                                  </div>
                                 </Link>
                               </motion.div>
                             ))}
@@ -451,6 +465,32 @@ const Header = () => {
                 </Link>
               </motion.div>
             )}
+
+            {/* Get Quote Button */}
+            <motion.div 
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 400 }}
+            >
+              <Button 
+                variant="header"
+                onClick={() => setShowQuotation(true)}
+                className="relative overflow-hidden group bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white border-0"
+              >
+                <motion.span
+                  className="relative z-10"
+                  whileHover={{ x: 2 }}
+                >
+                  Get Quote
+                </motion.span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+              </Button>
+            </motion.div>
             
 
           </motion.div>
@@ -557,11 +597,17 @@ const Header = () => {
                                     block py-3 px-4 text-sm font-medium text-white/90 hover:text-yellow-400 hover:bg-white/10 rounded-lg
                                     transition-all duration-200
                                     ${isActive(subItem.href) ? 'text-yellow-400 bg-white/10' : ''}
+                                    ${(subItem as any).featured ? 'bg-yellow-400/10 border-l-4 border-yellow-400 font-semibold' : ''}
                                   `}
                                   onClick={() => setIsOpen(false)}
                                 >
                                   <span className="text-yellow-400 mr-3 text-lg">•</span>
                                   {subItem.title}
+                                  {(subItem as any).featured && (
+                                    <span className="ml-2 text-xs bg-yellow-400 text-primary px-2 py-1 rounded-full">
+                                      Featured
+                                    </span>
+                                  )}
                                 </Link>
                               ))}
                             </div>

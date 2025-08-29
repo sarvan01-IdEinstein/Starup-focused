@@ -339,7 +339,7 @@ const InteractiveServices = () => {
 
                       <Link href={`/services/${service.slug}`}>
                         <Button 
-                          variant="default" 
+                          variant="primary" 
                           className="w-full"
                         >
                           Learn More

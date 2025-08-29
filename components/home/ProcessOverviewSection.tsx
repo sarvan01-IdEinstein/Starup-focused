@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { CheckCircle, ArrowRight, Lightbulb, Cog, TestTube, Rocket } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function ProcessOverviewSection() {
   const phases = [
@@ -10,12 +12,13 @@ export default function ProcessOverviewSection() {
       icon: Lightbulb,
       title: 'Concept Validation',
       duration: '2-4 weeks',
-      description: 'Assess technical and commercial viability with comprehensive analysis',
+      description: 'I work with you to assess technical feasibility and commercial viability, ensuring your idea has solid foundations',
+      personalNote: 'I personally review every aspect to identify potential challenges early',
       deliverables: [
-        'Feasibility report',
-        'Preliminary design concepts',
+        'Comprehensive feasibility report',
+        'Initial design concepts',
         'Technology roadmap',
-        'Risk analysis'
+        'Risk assessment & mitigation plan'
       ],
       color: 'from-yellow-500 to-orange-500'
     },
@@ -24,12 +27,13 @@ export default function ProcessOverviewSection() {
       icon: Cog,
       title: 'MVP Design & Prototyping',
       duration: '4-6 weeks',
-      description: 'Develop functional prototype to test core functionalities',
+      description: 'I create detailed designs and build functional prototypes to validate your core functionalities',
+      personalNote: 'You get direct access to me throughout the design process',
       deliverables: [
         'Detailed 3D CAD models',
         'Functional prototype',
-        'Performance testing',
-        'Design optimization'
+        'Performance testing results',
+        'Design optimization recommendations'
       ],
       color: 'from-blue-500 to-cyan-500'
     },
@@ -38,12 +42,13 @@ export default function ProcessOverviewSection() {
       icon: TestTube,
       title: 'Production Optimization',
       duration: '3-5 weeks',
-      description: 'Optimize design for manufacturing and scale production',
+      description: 'I optimize your design for manufacturing efficiency and coordinate with my trusted partners',
+      personalNote: 'I personally vet all manufacturing partners and oversee quality',
       deliverables: [
-        'Manufacturing drawings',
+        'Manufacturing-ready drawings',
         'Production process plan',
         'Quality control systems',
-        'Cost optimization'
+        'Cost optimization analysis'
       ],
       color: 'from-purple-500 to-pink-500'
     },
@@ -52,12 +57,13 @@ export default function ProcessOverviewSection() {
       icon: Rocket,
       title: 'Market Launch Support',
       duration: '3-5 weeks',
-      description: 'Support market entry with manufacturing and documentation',
+      description: 'I support your market entry with manufacturing setup and comprehensive documentation',
+      personalNote: 'I remain available for ongoing support after launch',
       deliverables: [
-        'Manufacturing setup',
-        'Technical documentation',
-        'Compliance certification',
-        'Launch support'
+        'Manufacturing setup coordination',
+        'Complete technical documentation',
+        'Compliance certification support',
+        'Launch strategy guidance'
       ],
       color: 'from-green-500 to-emerald-500'
     }
@@ -73,12 +79,16 @@ export default function ProcessOverviewSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center bg-blue-100 text-blue-800 px-6 py-3 text-sm font-medium mb-6 rounded-lg">
+            <Rocket className="w-4 h-4 mr-2" />
+            My Personal Process
+          </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Our Proven 4-Phase Process
+            How I Take Your Idea to Market
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A streamlined methodology that takes your idea from concept to market in 12-20 weeks. 
-            Each phase builds on the previous one, ensuring quality and reducing risk.
+            My proven 4-phase methodology that I personally guide you through. 
+            <span className="text-blue-600 font-semibold"> I'm with you every step of the way</span> - from initial concept to market launch.
           </p>
         </motion.div>
 
@@ -108,7 +118,7 @@ export default function ProcessOverviewSection() {
                     <div className="text-3xl font-bold text-gray-400 mb-1">
                       {phase.number}
                     </div>
-                    <div className="text-sm text-blue-600 font-medium bg-blue-100 px-3 py-1 rounded-full">
+                    <div className="text-sm text-blue-600 font-medium bg-blue-100 px-3 py-1 rounded-lg">
                       {phase.duration}
                     </div>
                   </div>
@@ -119,9 +129,16 @@ export default function ProcessOverviewSection() {
                   {phase.title}
                 </h3>
                 
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 mb-4 leading-relaxed">
                   {phase.description}
                 </p>
+
+                {/* Personal Note */}
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-r-lg">
+                  <p className="text-blue-800 text-sm font-medium italic">
+                    💡 Personal Touch: {phase.personalNote}
+                  </p>
+                </div>
 
                 {/* Deliverables */}
                 <div className="bg-white rounded-xl p-6 border border-gray-100">
@@ -147,33 +164,64 @@ export default function ProcessOverviewSection() {
           ))}
         </div>
 
-        {/* Summary */}
+        {/* Personal Commitment Summary */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white text-center max-w-4xl mx-auto"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white max-w-5xl mx-auto"
         >
-          <h3 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Start Your Journey?
-          </h3>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Our proven process has helped 100+ companies bring their ideas to market. 
-            From concept to production in just 12-20 weeks.
-          </p>
+          <div className="text-center mb-8">
+            <h3 className="text-3xl md:text-4xl font-bold mb-4">
+              Why My Process Works
+            </h3>
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+              I personally oversee every phase, ensuring quality and keeping you informed throughout the journey.
+            </p>
+          </div>
           
-          <div className="grid md:grid-cols-3 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-bold text-yellow-400 mb-2">12-20</div>
-              <div className="text-blue-200">Weeks to Market</div>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left: Professional Standards */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <h4 className="text-xl font-bold mb-4">My Professional Standards:</h4>
+              <ul className="space-y-3 text-blue-100">
+                <li className="flex items-center">
+                  <span className="text-yellow-400 mr-3">✓</span>
+                  <span>Regular progress updates and transparent communication</span>
+                </li>
+                <li className="flex items-center">
+                  <span className="text-yellow-400 mr-3">✓</span>
+                  <span>Prompt responses to questions and concerns</span>
+                </li>
+                <li className="flex items-center">
+                  <span className="text-yellow-400 mr-3">✓</span>
+                  <span>Thorough quality review at each milestone</span>
+                </li>
+                <li className="flex items-center">
+                  <span className="text-yellow-400 mr-3">✓</span>
+                  <span>Direct engineering consultation throughout</span>
+                </li>
+              </ul>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-yellow-400 mb-2">4</div>
-              <div className="text-blue-200">Structured Phases</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-yellow-400 mb-2">100+</div>
-              <div className="text-blue-200">Successful Projects</div>
+
+            {/* Right: Results */}
+            <div className="text-center">
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <div className="text-3xl font-bold text-yellow-400 mb-1">12-20</div>
+                  <div className="text-blue-200 text-sm">Weeks to Market</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-yellow-400 mb-1">100%</div>
+                  <div className="text-blue-200 text-sm">Personal Oversight</div>
+                </div>
+              </div>
+              <Link href="/services/product-development-accelerator">
+                <Button variant="accelerator" size="lg" className="rounded-lg">
+                  Start My Process
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         </motion.div>

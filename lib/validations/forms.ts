@@ -3,12 +3,15 @@ import * as z from "zod"
 const baseSchema = {
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(1, "Please enter your phone number"),
+  company: z.string().optional(),
   service: z.string().min(1, "Please select a service"),
   files: z.array(z.instanceof(File)).optional(),
 }
 
 export const consultationFormSchema = z.object({
   ...baseSchema,
+  description: z.string().min(10, "Please provide a project description (minimum 10 characters)"),
   date: z.date({
     required_error: "Please select a date",
     invalid_type_error: "That's not a valid date",

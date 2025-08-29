@@ -1,14 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import NewHeroSection from '@/components/home/NewHeroSection'
-import ValuePropositionSection from '@/components/home/ValuePropositionSection'
-import HubSpokeSection from '@/components/home/HubSpokeSection'
-import StartupFocusSection from '@/components/home/StartupFocusSection'
-import ProvenResultsSection from '@/components/home/ProvenResultsSection'
-import ProcessOverviewSection from '@/components/home/ProcessOverviewSection'
-import TestimonialsSection from '@/components/home/TestimonialsSection'
-import FinalCTASection from '@/components/home/FinalCTASection'
+import DualAudienceHeroSection from '@/components/home/DualAudienceHeroSection'
+import SoloFounderAdvantageSection from '@/components/home/SoloFounderAdvantageSection'
+import AudienceSegmentationSection from '@/components/home/AudienceSegmentationSection'
+import ConditionalContentRenderer from '@/components/home/ConditionalContentRenderer'
+import StartupPathContent from '@/components/home/StartupPathContent'
+import EnterprisePathContent from '@/components/home/EnterprisePathContent'
+import DualCTASection from '@/components/home/DualCTASection'
 
 export default function HomePage() {
   return (
@@ -17,14 +16,23 @@ export default function HomePage() {
       animate={{ opacity: 1 }}
       className="min-h-screen"
     >
-      <NewHeroSection />
-      <ValuePropositionSection />
-      <HubSpokeSection />
-      <StartupFocusSection />
-      <ProvenResultsSection />
-      <ProcessOverviewSection />
-      <TestimonialsSection />
-      <FinalCTASection />
+      {/* 1. Dual Audience Hero - Balanced for both audiences */}
+      <DualAudienceHeroSection />
+      
+      {/* 2. Solo Founder Advantages - Universal appeal */}
+      <SoloFounderAdvantageSection />
+      
+      {/* 3. Audience Segmentation - Let users choose their path */}
+      <AudienceSegmentationSection />
+      
+      {/* 4. Conditional Content - Tailored to selected audience */}
+      <ConditionalContentRenderer
+        startupContent={<StartupPathContent />}
+        enterpriseContent={<EnterprisePathContent />}
+      />
+      
+      {/* 5. Final CTA - Audience-aware conversion actions */}
+      <DualCTASection />
     </motion.div>
   );
 }

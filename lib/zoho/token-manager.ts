@@ -1,6 +1,8 @@
 // Server-Side Zoho Token Management
 // Handles automatic token refresh with proper authentication
 
+import { logger } from '@/lib/secure-logger'
+
 interface ZohoTokens {
   access_token: string
   refresh_token: string
@@ -66,7 +68,7 @@ export class ZohoTokenManager {
    */
   private async refreshToken(service: string): Promise<string> {
     try {
-      console.log(`🔄 Refreshing Zoho ${service} token...`)
+      logger.logTokenOperation('refresh_start', service, false)
 
       const clientId = this.getClientId(service)
       const clientSecret = this.getClientSecret(service)
@@ -92,8 +94,8 @@ export class ZohoTokenManager {
 
       if (!response.ok) {
         const errorText = await response.text()
-        console.error(`❌ Token refresh failed for ${service}:`, errorText)
-        throw new Error(`Token refresh failed: ${response.status} ${errorText}`)
+        logger.error(`Token refresh failed for ${service}`, { status: response.status })
+        throw new Error(`Token refresh failed: ${response.status}`)
       }
 
       const tokenData: ZohoTokenResponse = await response.json()
@@ -108,11 +110,11 @@ export class ZohoTokenManager {
 
       this.tokens.set(`zoho_${service}`, tokens)
 
-      console.log(`✅ Zoho ${service} token refreshed successfully`)
+      logger.logTokenOperation('refresh_success', service, true)
       return tokenData.access_token
 
     } catch (error) {
-      console.error(`❌ Error refreshing Zoho ${service} token:`, error)
+      logger.error(`Error refreshing Zoho ${service} token`, error)
       throw error
     }
   }
