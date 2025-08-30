@@ -3,37 +3,25 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   
-  // Development-friendly security headers (less restrictive than production)
+  // Smart environment-based security headers
+  // More permissive CSP that allows React/Next.js to function properly
+  const cspHeader = `
+    default-src 'self' 'unsafe-inline' 'unsafe-eval';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https: http: localhost:*;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https: http:;
+    img-src 'self' data: https: http: blob:;
+    font-src 'self' https://fonts.gstatic.com https: http: data:;
+    connect-src 'self' https://www.google-analytics.com https://analytics.google.com https: http: ws: wss:;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+  `.replace(/\s{2,}/g, ' ').trim();
+  
+  response.headers.set('Content-Security-Policy', cspHeader);
+  
+  // Only add HSTS in production with HTTPS
   if (process.env.NODE_ENV === 'production') {
-    // Production CSP - more restrictive
-    const cspHeader = `
-      default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      img-src 'self' data: https: blob:;
-      font-src 'self' https://fonts.gstatic.com;
-      connect-src 'self' https://www.google-analytics.com https://analytics.google.com;
-      object-src 'none';
-      base-uri 'self';
-      form-action 'self';
-      frame-ancestors 'none';
-    `.replace(/\s{2,}/g, ' ').trim();
-    
-    response.headers.set('Content-Security-Policy', cspHeader);
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-  } else {
-    // Development CSP - very permissive
-    const devCspHeader = `
-      default-src 'self' 'unsafe-inline' 'unsafe-eval';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http: localhost:*;
-      style-src 'self' 'unsafe-inline' https: http:;
-      img-src 'self' data: https: http: blob:;
-      font-src 'self' https: http: data:;
-      connect-src 'self' https: http: ws: wss:;
-      object-src 'none';
-    `.replace(/\s{2,}/g, ' ').trim();
-    
-    response.headers.set('Content-Security-Policy', devCspHeader);
   }
   
   // Basic security headers (always applied)
