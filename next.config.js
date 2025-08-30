@@ -89,10 +89,10 @@ const nextConfig = {
     // PPR (Partial Prerendering) - Next.js 15 feature
     ppr: false, // Keep disabled for SaaS with dynamic content
     
-    // Subresource Integrity for enhanced security
-    sri: {
-      algorithm: 'sha256',
-    },
+    // Subresource Integrity - DISABLED for Vercel compatibility
+    // sri: {
+    //   algorithm: 'sha256',
+    // },
   },
 
   // Turbopack configuration (stable in Next.js 15.4+)
