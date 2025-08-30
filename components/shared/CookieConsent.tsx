@@ -67,9 +67,15 @@ export default function CookieConsent() {
       });
     }
 
-    // Store preferences
+    // Store preferences and trigger storage event for other components
     localStorage.setItem('cookie-consent', JSON.stringify(prefs));
     localStorage.setItem('cookie-consent-date', new Date().toISOString());
+    
+    // Trigger storage event manually for same-window components
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'cookie-consent',
+      newValue: JSON.stringify(prefs)
+    }));
   };
 
   const handleAcceptAll = () => {
