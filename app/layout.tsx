@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { CartProvider } from '@/context/CartContext'
+// import { CartProvider } from '@/context/CartContext' // Not needed - store has no cart functionality
 import { AudienceProvider } from '@/lib/contexts/AudienceContext'
 import FloatingContactHub from '@/components/shared/FloatingContactHub'
 import ErrorBoundary from '@/components/shared/ErrorBoundary'
@@ -36,19 +36,17 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <ErrorBoundary>
-            <CartProvider>
-              <AudienceProvider>
-                <div className="flex flex-col min-h-screen">
-                  <Header />
-                  <main className="flex-grow">
-                    {children}
-                  </main>
-                  <Footer />
-                  <FloatingContactHub />
-                  <CookieConsent />
-                </div>
-              </AudienceProvider>
-            </CartProvider>
+            <AudienceProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">
+                  {children}
+                </main>
+                <Footer />
+                <FloatingContactHub />
+                <CookieConsent />
+              </div>
+            </AudienceProvider>
           </ErrorBoundary>
         </SessionProvider>
       </body>
